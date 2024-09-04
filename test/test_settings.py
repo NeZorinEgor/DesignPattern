@@ -57,10 +57,10 @@ def test_load_settings_from_json():
     assert settings.TYPE_OF_OWNERSHIP == "SOLID"
 
 
-def test_load_settings_from_json_from_another_dir_and_name():
+def test_load_settings_from_another_dir_and_name():
     """ Тест загрузки данных из json файла """
     settings_manager = SettingsManager()
-    settings_manager.from_json(os.path.join("zxy_file_for_test.json"))
+    settings_manager.from_json(os.path.join("file_for_test.json"))
 
     settings = settings_manager.settings
     assert settings.INN == "############"
