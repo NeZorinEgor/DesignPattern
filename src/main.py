@@ -12,10 +12,10 @@ def singleton(class_):
     return get_instance
 
 
+@singleton
 class Settings:
-    def __init__(self):
-        self._inn = ""
-        self._org_name = ""
+    _inn = ""
+    _org_name = ""
 
     @property
     def inn(self):
@@ -58,9 +58,8 @@ class SettingsManager:
             for k, v in file.items():
                 if hasattr(self.__settings, k):
                     setattr(self.__settings, k, v)
-            print(self.__settings.inn)
-            print(self.__settings.org_name)
 
+    @property
     def settings(self):
         return self.__settings
 
@@ -68,6 +67,12 @@ class SettingsManager:
 settings_manager = SettingsManager()
 settings_manager.open("/home/egor/Develop/HomeWork/DesignPattern/settings.json")
 
-settings = settings_manager.settings()
+settings = settings_manager.settings
 print(settings.org_name)
 print(settings.inn)
+
+
+settings_manager2 = SettingsManager()
+settings2 = settings_manager2.settings
+print(settings2.org_name)
+print(settings2.inn)
