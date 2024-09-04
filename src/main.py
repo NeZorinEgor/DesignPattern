@@ -1,6 +1,6 @@
 import os
 
-from settings import SettingsManager
+from managers.settings import SettingsManager
 
 
 settings_dict = {

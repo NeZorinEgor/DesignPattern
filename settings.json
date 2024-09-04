@@ -1,8 +1,8 @@
 {
-    "INN": "############",
-    "ACCOUNT": "@@@@@@@@@@@",
-    "CORRESPONDENT_ACCOUNT": "!!!!!!!!!!!",
-    "BIC": "$$$$$$$$$",
-    "NAME": "%%%%%%%%%%%%%%%%%%%%",
-    "TYPE_OF_OWNERSHIP": "^^^^^"
+    "INN": "123456789012",
+    "ACCOUNT": "40702810123",
+    "CORRESPONDENT_ACCOUNT": "38104000000",
+    "BIC": "044525225",
+    "NAME": "CLEAR ARCHETYPE? NO NO NO",
+    "TYPE_OF_OWNERSHIP": "SOLID"
 }

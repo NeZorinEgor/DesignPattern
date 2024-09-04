@@ -1,10 +1,3 @@
-import json
-import os
-
-from utils import singleton
-
-
-@singleton
 class Settings:
     """ Модель настроек. """
     __INN: str = ""
@@ -90,37 +83,3 @@ class Settings:
         if len(new_type_of_ownership) != 5:
             raise ValueError(f"TYPE_OF_OWNERSHIP must be exactly 5 characters long, not {len(new_type_of_ownership)}")
         self.__TYPE_OF_OWNERSHIP = new_type_of_ownership
-
-
-@singleton
-class SettingsManager:
-    """ Класс для управления настройками. """
-    file_name = "settings.json"
-    __settings = Settings()
-
-    @property
-    def settings(self) -> Settings:
-        return self.__settings
-
-    def from_json(self, file_path: str = os.path.join(os.pardir, file_name)) -> None:
-        """ По умолчанию берется файл ../settings.json, можно указать полный путь. """
-        # Проверки на входные значения
-        if not isinstance(file_path, str):
-            raise TypeError("File path should be a string")
-        if not os.path.exists(file_path):
-            raise FileNotFoundError(f"File {file_path} does not exist")
-
-        # Чтений json файла и гибкое создание класса
-        with open(file_path, "r") as f:
-            file = json.load(f)
-            for key, value in file.items():
-                if hasattr(self.__settings, key):
-                    setattr(self.__settings, key, value)
-
-    def from_dict(self, input_dict: dict) -> None:
-        if not isinstance(input_dict, dict):
-            raise TypeError("Var should be a dict")
-
-        for key, value in input_dict.items():
-            if hasattr(self.__settings, key):
-                setattr(self.settings, key, value)

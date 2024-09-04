@@ -2,7 +2,7 @@ import os.path
 
 import pytest
 
-from src.settings import SettingsManager
+from managers.settings import SettingsManager
 
 
 def test_no_load_settings():
@@ -49,12 +49,12 @@ def test_load_settings_from_json():
     settings_manager.from_json(os.path.join(os.pardir, "settings.json"))
 
     settings = settings_manager.settings
-    assert settings.INN == "############"
-    assert settings.ACCOUNT == "@@@@@@@@@@@"
-    assert settings.CORRESPONDENT_ACCOUNT == "!!!!!!!!!!!"
-    assert settings.BIC == "$$$$$$$$$"
-    assert settings.NAME == "%%%%%%%%%%%%%%%%%%%%"
-    assert settings.TYPE_OF_OWNERSHIP == "^^^^^"
+    assert settings.INN == "123456789012"
+    assert settings.ACCOUNT == "40702810123"
+    assert settings.CORRESPONDENT_ACCOUNT == "38104000000"
+    assert settings.BIC == "044525225"
+    assert settings.NAME == "CLEAR ARCHETYPE? NO NO NO"
+    assert settings.TYPE_OF_OWNERSHIP == "SOLID"
 
 
 def test_load_settings_from_json_from_another_dir_and_name():
