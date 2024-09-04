@@ -6,7 +6,7 @@ from managers.settings import SettingsManager
 settings_dict = {
     "INN": "123456789012",                   # 12 символов
     "ACCOUNT": "40702810123",                # 11 символов
-    "CORRESPONDENT_ACCOUNT": "38104000000",  # 15 символов
+    "CORRESPONDENT_ACCOUNT": "38104000000",  # 11 символов
     "BIC": "044525225",                      # 9 символов
     "NAME": "CLEAR ARCHETYPE? NO NO NO",     # n символов
     "TYPE_OF_OWNERSHIP": "SOLID"             # 5 символа
