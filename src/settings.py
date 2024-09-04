@@ -7,12 +7,12 @@ from utils import singleton
 @singleton
 class Settings:
     """ Модель настроек. """
-    __INN = ""
-    __ACCOUNT = ""
-    __CORRESPONDENT_ACCOUNT = ""
-    __BIC = ""
-    __NAME = ""
-    __TYPE_OF_OWNERSHIP = ""
+    __INN: str = ""
+    __ACCOUNT: str = ""
+    __CORRESPONDENT_ACCOUNT: str = ""
+    __BIC: str = ""
+    __NAME: str = ""
+    __TYPE_OF_OWNERSHIP: str = ""
 
     def __str__(self):
         return f"INN={self.__INN} \nACCOUNT={self.__ACCOUNT} \nCORRESPONDENT_ACCOUNT={self.__CORRESPONDENT_ACCOUNT} \nBIC={self.__BIC} \nNAME={self.__NAME} \nTYPE_OF_OWNERSHIP={self.__TYPE_OF_OWNERSHIP}"

@@ -57,6 +57,20 @@ def test_load_settings_from_json():
     assert settings.TYPE_OF_OWNERSHIP == "^^^^^"
 
 
+def test_load_settings_from_json_from_another_dir_and_name():
+    """ Тест загрузки данных из json файла """
+    settings_manager = SettingsManager()
+    settings_manager.from_json(os.path.join("zxy_file_for_test.json"))
+
+    settings = settings_manager.settings
+    assert settings.INN == "############"
+    assert settings.ACCOUNT == "@@@@@@@@@@@"
+    assert settings.CORRESPONDENT_ACCOUNT == "!!!!!!!!!!!"
+    assert settings.BIC == "$$$$$$$$$"
+    assert settings.NAME == "%%%%%%%%%%%%%%%%%%%%"
+    assert settings.TYPE_OF_OWNERSHIP == "^^^^^"
+
+
 def test_invalid_fields_len():
     """ Тест на загрузку полей не корректной длинны """
     settings_manager = SettingsManager()
