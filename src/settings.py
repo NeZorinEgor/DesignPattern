@@ -26,7 +26,7 @@ class Settings:
         if not isinstance(new_inn, str):
             raise TypeError("INN must be a string")
         if len(new_inn) != 12:
-            raise ValueError("INN must be exactly 12 characters long")
+            raise ValueError(f"INN must be exactly 12 characters long, not {len(new_inn)}")
 
         self._INN = new_inn
 
@@ -39,7 +39,7 @@ class Settings:
         if not isinstance(new_account, str):
             raise TypeError("ACCOUNT must be a string")
         if len(new_account) != 11:
-            raise ValueError("ACCOUNT must be exactly 11 characters long")
+            raise ValueError(f"ACCOUNT must be exactly 11 characters long, not {len(new_account)}")
 
         self._ACCOUNT = new_account
 
@@ -52,7 +52,7 @@ class Settings:
         if not isinstance(new_correspondent_account, str):
             raise TypeError("CORRESPONDENT_ACCOUNT must be a string")
         if len(new_correspondent_account) != 11:
-            raise ValueError("CORRESPONDENT_ACCOUNT must be exactly 11 characters long")
+            raise ValueError(f"CORRESPONDENT_ACCOUNT must be exactly 11 characters long, not {len(new_correspondent_account)}")
 
         self._CORRESPONDENT_ACCOUNT = new_correspondent_account
 
@@ -65,7 +65,7 @@ class Settings:
         if not isinstance(new_bic, str):
             raise TypeError("CORRESPONDENT_ACCOUNT must be a string")
         if len(new_bic) != 9:
-            raise ValueError("BIC must be exactly 9 characters long")
+            raise ValueError(f"BIC must be exactly 9 characters long, not {len(new_bic)}")
 
         self._BIC = new_bic
 
@@ -88,7 +88,7 @@ class Settings:
         if not isinstance(new_type_of_ownership, str):
             raise TypeError("TYPE_OF_OWNERSHIP must be a string")
         if len(new_type_of_ownership) != 5:
-            raise ValueError("TYPE_OF_OWNERSHIP must be exactly 5 characters long")
+            raise ValueError(f"TYPE_OF_OWNERSHIP must be exactly 5 characters long, not {len(new_type_of_ownership)}")
         self._TYPE_OF_OWNERSHIP = new_type_of_ownership
 
 
