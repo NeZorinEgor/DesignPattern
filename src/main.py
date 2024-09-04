@@ -21,6 +21,8 @@ def main():
     settings_manager.from_json(file_path=path_to_settings)
     settings = settings_manager.settings
     print(settings)
+    print(f"Test one instance by '==' {SettingsManager().settings == SettingsManager().settings}")
+    print(f"Test one instance by 'is' {SettingsManager().settings is SettingsManager().settings}")
 
 
 if __name__ == "__main__":
