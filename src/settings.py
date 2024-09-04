@@ -5,8 +5,8 @@ from utils import singleton
 
 @singleton
 class Settings:
-    _inn = ""
-    _org_name = ""
+    _inn = "base value"
+    _org_name = "base value"
 
     @property
     def inn(self):
