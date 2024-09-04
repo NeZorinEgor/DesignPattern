@@ -5,6 +5,7 @@ from utils import singleton
 
 @singleton
 class Settings:
+    """ Модель настроек """
     _inn = "base value"
     _org_name = "base value"
 
@@ -31,21 +32,23 @@ class Settings:
 
 @singleton
 class SettingsManager:
+    """ Класс для управления настройками """
     file_name = "settings.json"
+    __settings = Settings()
 
-    def __init__(self):
-        self.__settings = Settings()
-
-    def open(self, file_path: str):
+    def open(
+            self,
+            file_path: str = os.path.join(os.pardir, file_name)   # Значение по умолчанию
+    ):
+        # Проверки на входные значения
         if not isinstance(file_path, str):
             raise TypeError("File path should be a string")
-
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"File {file_path} does not exist")
 
+        # Чтений json файла и гибкое создание класса
         with open(file_path, "r") as f:
             file = json.load(f)
-
             for k, v in file.items():
                 if hasattr(self.__settings, k):
                     setattr(self.__settings, k, v)
