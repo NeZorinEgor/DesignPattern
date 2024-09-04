@@ -1,6 +1,7 @@
 import os.path
 
 import pytest
+
 from src.settings import SettingsManager
 
 
