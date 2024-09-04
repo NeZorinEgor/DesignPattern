@@ -9,10 +9,10 @@ class SettingsManager:
     file_name = "settings.json"
     __settings = Settings()
 
-    def __new__(cls):
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(SettingsManager, cls).__new__(cls)
-        return cls.instance
+    # def __new__(cls):
+    #     if not hasattr(cls, 'instance'):
+    #         cls.instance = super(SettingsManager, cls).__new__(cls)
+    #     return cls.instance
 
     @property
     def settings(self) -> Settings:

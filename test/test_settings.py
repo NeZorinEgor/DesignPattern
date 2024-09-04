@@ -98,3 +98,5 @@ def test_is_singleton():
     settings2 = settings_manager2.settings
     assert settings1 is settings2
     assert settings_manager1 is settings_manager2
+    assert settings1 == settings2
+    assert settings_manager1 == settings_manager2
