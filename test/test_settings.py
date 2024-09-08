@@ -2,7 +2,7 @@ import os.path
 
 import pytest
 
-from managers.settings import SettingsManager
+from src.managers.settings import SettingsManager
 
 
 def test_no_load_settings():
