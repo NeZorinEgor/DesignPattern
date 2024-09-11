@@ -1,14 +1,16 @@
 import os
 
 from managers.settings import SettingsManager
+from models.organization import Organization
 
 
 def main():
     settings_manager = SettingsManager()
-    settings_manager.from_json(path=os.path.join(os.pardir, "settings.json"))
+    path = os.path.join(os.pardir, "settings.json")
+    settings_manager.from_json(path=path)
     settings = settings_manager.settings
-
-    print(settings)
+    organization = Organization(settings)
+    print(organization)
 
 
 if __name__ == "__main__":
