@@ -10,7 +10,7 @@ def main():
     settings_manager.from_json(path=path)
     settings = settings_manager.settings
     organization = Organization(settings)
-    print("Organization INFO: ")
+    print("Organization INFO:")
     print(organization)
 
 

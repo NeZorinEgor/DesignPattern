@@ -15,4 +15,4 @@ class BaseModel(ABC):
         pass
 
     def __eq__(self, other):
-        return self.uuid == other.uuid or self.local_eq(self)
+        return self.uuid == other.uuid or self.local_eq(other)

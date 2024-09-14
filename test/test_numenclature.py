@@ -1,4 +1,4 @@
-from src.contracts.implements.nomenclature import Nomenclature
+from src.models.nomenclature import Nomenclature
 
 
 n1 = Nomenclature()
@@ -18,4 +18,4 @@ def test_base_equals():
 def test_base_no_equals():
     n1.name = "this"
     n2.name = "not this"
-    assert n1 == n2
+    assert n1 != n2

@@ -1,14 +1,20 @@
 from src.models.settings import Settings
+from src.contracts.base_model import BaseModel
 
 
-class Organization:
+class Organization(BaseModel):
     """ Модель организации """
+
+    def local_eq(self, other):
+        return self.inn == other.inn
+
     __inn: str = ""
     __bic: str = ""
     __account: str = ""
     __type_of_ownership: str = ""
 
     def __init__(self, settings: Settings):
+        super().__init__()
         self.__inn = settings.inn
         self.__bic = settings.bic
         self.__account = settings.account
