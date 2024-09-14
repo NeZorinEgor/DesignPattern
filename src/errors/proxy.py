@@ -3,7 +3,7 @@ class ErrorProxy:
 
     def __init__(self, exception: Exception = None):
         if exception is not None:
-            self.__error_message = (str(exception))
+            self.__error_message = str(exception)
 
     @property
     def error_message(self) -> str:
