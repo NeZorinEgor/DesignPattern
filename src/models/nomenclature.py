@@ -1,7 +1,7 @@
-from src.contracts.nomenclature import ABCNomenclature
+from src.contracts.nomenclature import BaseModel
 
 
-class Nomenclature(ABCNomenclature):
+class Nomenclature(BaseModel):
     __name: str = ""
 
     def local_eq(self, other):

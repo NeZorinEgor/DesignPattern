@@ -2,10 +2,9 @@ import json
 import os
 
 from src.models.settings import Settings
-from src.contract import Logic
 
 
-class SettingsManager(Logic):
+class SettingsManager:
     """ Класс для управления настройками. """
 
     def set_exception(self, ex: Exception):
