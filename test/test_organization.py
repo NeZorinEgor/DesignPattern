@@ -4,7 +4,7 @@ from src.managers.settings import SettingsManager
 from src.models.organization import Organization
 
 
-def test_read_settings_class():
+def test_read_settings_from_constructor():
     settings_manager = SettingsManager()
     path = os.path.join(os.pardir, "settings.json")
     settings_manager.from_json(path=path)
