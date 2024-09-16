@@ -1,5 +1,5 @@
 class Range:
-    """ Модель единица измерения """
+    """ Модель единицы измерения """
     def __init__(self, name, conversion_factor, base_unit=None):
         self.name = name
         self.conversion_factor = conversion_factor
@@ -12,7 +12,5 @@ class Range:
         return value / self.conversion_factor
 
     def __str__(self):
-        return f"{self.name} (коэффициент пересчета: {self.conversion_factor})"
-
-
-
+        base_unit_str = f", базовая единица: {self.base_unit.name}" if self.base_unit != self else ""
+        return f"{self.name} (коэффициент пересчета: {self.conversion_factor}{base_unit_str})"

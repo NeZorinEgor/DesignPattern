@@ -2,13 +2,15 @@ from src.contracts.base_model import BaseModel
 
 
 class GroupNomenclature(BaseModel):
-    def __init__(self, nomenclature_type):
+    __nomenclature_type = ""
+
+    def __init__(self):
         super().__init__()
-        self.__nomenclature_type = nomenclature_type
 
     def local_eq(self, other):
         pass
 
-    def create_base_group(self):
-        return GroupNomenclature(self.__nomenclature_type)
+    @staticmethod
+    def create_base_group():
+        return GroupNomenclature()
 

@@ -1,5 +1,8 @@
+from src.errors.base import InvalidTypeError, InvalidLengthError
+
+
 class Settings:
-    """ Модель настроек. """
+    """Модель настроек с кастомными ошибками."""
     __inn: str = ""
     __account: str = ""
     __correspondent_account: str = ""
@@ -8,7 +11,10 @@ class Settings:
     __type_of_ownership: str = ""
 
     def __str__(self):
-        return f"INN: {self.__inn} \nACCOUNT: {self.__account} \nCORRESPONDENT_ACCOUNT: {self.__correspondent_account} \nBIC: {self.__bic} \nNAME: {self.__name} \nTYPE_OF_OWNERSHIP: {self.__type_of_ownership}"
+        return (f"INN: {self.__inn} \nACCOUNT: {self.__account} \n"
+                f"CORRESPONDENT_ACCOUNT: {self.__correspondent_account} \n"
+                f"BIC: {self.__bic} \nNAME: {self.__name} \n"
+                f"TYPE_OF_OWNERSHIP: {self.__type_of_ownership}")
 
     @property
     def inn(self) -> str:
@@ -17,10 +23,9 @@ class Settings:
     @inn.setter
     def inn(self, new_inn) -> None:
         if not isinstance(new_inn, str):
-            raise TypeError("INN must be a string")
+            raise InvalidTypeError("INN must be a string")
         if len(new_inn) != 12:
-            raise ValueError(f"INN must be exactly 12 characters long, not {len(new_inn)}")
-
+            raise InvalidLengthError(f"INN must be exactly 12 characters long, not {len(new_inn)}")
         self.__inn = new_inn
 
     @property
@@ -30,10 +35,9 @@ class Settings:
     @account.setter
     def account(self, new_account) -> None:
         if not isinstance(new_account, str):
-            raise TypeError("ACCOUNT must be a string")
+            raise InvalidTypeError("ACCOUNT must be a string")
         if len(new_account) != 11:
-            raise ValueError(f"ACCOUNT must be exactly 11 characters long, not {len(new_account)}")
-
+            raise InvalidLengthError(f"ACCOUNT must be exactly 11 characters long, not {len(new_account)}")
         self.__account = new_account
 
     @property
@@ -43,10 +47,9 @@ class Settings:
     @correspondent_account.setter
     def correspondent_account(self, new_correspondent_account) -> None:
         if not isinstance(new_correspondent_account, str):
-            raise TypeError("CORRESPONDENT_ACCOUNT must be a string")
+            raise InvalidTypeError("CORRESPONDENT_ACCOUNT must be a string")
         if len(new_correspondent_account) != 11:
-            raise ValueError(f"CORRESPONDENT_ACCOUNT must be exactly 11 characters long, not {len(new_correspondent_account)}")
-
+            raise InvalidLengthError(f"CORRESPONDENT_ACCOUNT must be exactly 11 characters long, not {len(new_correspondent_account)}")
         self.__correspondent_account = new_correspondent_account
 
     @property
@@ -56,10 +59,9 @@ class Settings:
     @bic.setter
     def bic(self, new_bic) -> None:
         if not isinstance(new_bic, str):
-            raise TypeError("CORRESPONDENT_ACCOUNT must be a string")
+            raise InvalidTypeError("BIC must be a string")
         if len(new_bic) != 9:
-            raise ValueError(f"BIC must be exactly 9 characters long, not {len(new_bic)}")
-
+            raise InvalidLengthError(f"BIC must be exactly 9 characters long, not {len(new_bic)}")
         self.__bic = new_bic
 
     @property
@@ -69,7 +71,7 @@ class Settings:
     @name.setter
     def name(self, new_name) -> None:
         if not isinstance(new_name, str):
-            raise TypeError("NAME must be a string")
+            raise InvalidTypeError("NAME must be a string")
         self.__name = new_name
 
     @property
@@ -79,7 +81,7 @@ class Settings:
     @type_of_ownership.setter
     def type_of_ownership(self, new_type_of_ownership) -> None:
         if not isinstance(new_type_of_ownership, str):
-            raise TypeError("TYPE_OF_OWNERSHIP must be a string")
+            raise InvalidTypeError("TYPE_OF_OWNERSHIP must be a string")
         if len(new_type_of_ownership) != 5:
-            raise ValueError(f"TYPE_OF_OWNERSHIP must be exactly 5 characters long, not {len(new_type_of_ownership)}")
+            raise InvalidLengthError(f"TYPE_OF_OWNERSHIP must be exactly 5 characters long, not {len(new_type_of_ownership)}")
         self.__type_of_ownership = new_type_of_ownership
