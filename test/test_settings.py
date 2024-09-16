@@ -2,6 +2,7 @@ import os.path
 
 import pytest
 
+from src.errors.base import InvalidLengthError
 from src.managers.settings import SettingsManager
 
 
@@ -75,15 +76,15 @@ def test_invalid_fields_len():
     """ Тест на загрузку полей не корректной длинны """
     settings_manager = SettingsManager()
 
-    with pytest.raises(ValueError, match="INN must be exactly 12 characters long, not 1"):
+    with pytest.raises(InvalidLengthError, match="INN must be exactly 12 characters long, not 1"):
         settings_manager.from_dict({"inn": "1"})
-    with pytest.raises(ValueError, match="ACCOUNT must be exactly 11 characters long, not 1"):
+    with pytest.raises(InvalidLengthError, match="ACCOUNT must be exactly 11 characters long, not 1"):
         settings_manager.from_dict({"account": "2"})
-    with pytest.raises(ValueError, match="CORRESPONDENT_ACCOUNT must be exactly 11 characters long, not 1"):
+    with pytest.raises(InvalidLengthError, match="CORRESPONDENT_ACCOUNT must be exactly 11 characters long, not 1"):
         settings_manager.from_dict({"correspondent_account": "3"})
-    with pytest.raises(ValueError, match="BIC must be exactly 9 characters long, not 1"):
+    with pytest.raises(InvalidLengthError, match="BIC must be exactly 9 characters long, not 1"):
         settings_manager.from_dict({"bic": "4"})
-    with pytest.raises(ValueError, match="TYPE_OF_OWNERSHIP must be exactly 5 characters long, not 1"):
+    with pytest.raises(InvalidLengthError, match="TYPE_OF_OWNERSHIP must be exactly 5 characters long, not 1"):
         settings_manager.from_dict({"type_of_ownership": "5"})
 
 
