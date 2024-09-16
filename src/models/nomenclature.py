@@ -1,8 +1,13 @@
-from src.contracts.nomenclature import ABCNomenclature
+from src.contracts.base_model import BaseModel
 
 
-class Nomenclature(ABCNomenclature):
+class Nomenclature(BaseModel):
     __name: str = ""
+    __group = None
+    __range = None
+
+    def __init__(self):
+        super().__init__()
 
     def local_eq(self, other):
         return self.name == other.name

@@ -1,13 +1,17 @@
 import json
 import os
 
+from src.errors.base import InvalidTypeError
+from src.errors.proxy import ErrorProxy
 from src.models.settings import Settings
 
 
 class SettingsManager:
-    """ Класс для управления настройками. """
+    """Класс для управления настройками с интеграцией ErrorProxy."""
+
     file_name = "settings.json"
     __settings = Settings()
+    __error_proxy = ErrorProxy()
 
     def __new__(cls):
         # Singleton pattern
@@ -19,27 +23,40 @@ class SettingsManager:
     def settings(self) -> Settings:
         return self.__settings
 
-    def from_json(self, path: str = os.path.join(os.pardir, file_name)) -> None:
-        """ Установка полей класса Settings из Json файла. По умолчанию берется файл ../settings.json, можно указать полный путь. """
-        # Проверки на входные значения
-        if not isinstance(path, str):
-            raise TypeError("File path should be a string")
-        if not os.path.exists(path):
-            raise FileNotFoundError(f"File {path} does not exist")
+    @property
+    def error_proxy(self) -> ErrorProxy:
+        return self.__error_proxy
 
-        # Чтений json файла и заполнение полей класса
-        with open(path, "r", encoding="utf-8") as f:
-            file = json.load(f)
-            for key, value in file.items():
-                if hasattr(self.__settings, key):
-                    setattr(self.__settings, key, value)
+    def set_exception(self, ex: Exception) -> None:
+        """Устанавливает сообщение об ошибке в ErrorProxy."""
+        self.__error_proxy.error_message = str(ex)
+        raise ex
+
+    def from_json(self, path: str = os.path.join(os.pardir, file_name)) -> None:
+        try:
+            if not isinstance(path, str):
+                raise InvalidTypeError("File path should be a string")
+            if not os.path.exists(path):
+                raise FileNotFoundError(f"File {path} does not exist")
+
+            with open(path, "r", encoding="utf-8") as f:
+                file = json.load(f)
+                for key, value in file.items():
+                    if hasattr(self.__settings, key):
+                        setattr(self.__settings, key, value)
+        except Exception as ex:
+            self.set_exception(ex)
+            if not self.__error_proxy.is_empty:
+                return
 
     def from_dict(self, input_dict: dict) -> None:
-        """ Установка полей класса Settings из dict'а. """
-        if not isinstance(input_dict, dict):
-            raise TypeError("Var should be a dict")
+        """Установка полей класса Settings из dict'а."""
+        try:
+            if not isinstance(input_dict, dict):
+                raise InvalidTypeError("Var should be a dict")
 
-        # Чтений словаря и заполнение полей класса
-        for key, value in input_dict.items():
-            if hasattr(self.__settings, key):
-                setattr(self.settings, key, value)
+            for key, value in input_dict.items():
+                if hasattr(self.__settings, key):
+                    setattr(self.__settings, key, value)
+        except Exception as ex:
+            self.set_exception(ex)

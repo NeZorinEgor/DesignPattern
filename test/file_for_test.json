@@ -1,8 +1,8 @@
 {
-    "INN": "############",
-    "ACCOUNT": "@@@@@@@@@@@",
-    "CORRESPONDENT_ACCOUNT": "!!!!!!!!!!!",
-    "BIC": "$$$$$$$$$",
-    "NAME": "%%%%%%%%%%%%%%%%%%%%",
-    "TYPE_OF_OWNERSHIP": "^^^^^"
+    "inn": "############",
+    "account": "@@@@@@@@@@@",
+    "correspondent_account": "!!!!!!!!!!!",
+    "bic": "$$$$$$$$$",
+    "name": "%%%%%%%%%%%%%%%%%%%%",
+    "type_of_ownership": "^^^^^"
 }

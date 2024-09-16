@@ -4,5 +4,8 @@
 /test/__pycache__/
 /src/models/__pycache__/
 /src/managers/__pycache__/
+/src/contracts/__pycache__/
+/src/contracts/implements/__pycache__/
+/src/errors/__pycache__/
 /__pycache__/
 /src/contract.py
