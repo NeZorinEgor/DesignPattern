@@ -1,6 +1,6 @@
 from src.contracts.model import BaseModel
 
 
-class Storehouse(BaseModel):
+class NomenclatureRepository(BaseModel):
     def local_eq(self, other):
         pass

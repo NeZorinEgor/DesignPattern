@@ -1,4 +1,4 @@
-from src.contracts.base_model import BaseModel
+from src.contracts.model import BaseModel
 
 
 class GroupNomenclature(BaseModel):

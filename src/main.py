@@ -1,6 +1,6 @@
 import os
 
-from managers.settings import SettingsManager
+from src.settings_manager import SettingsManager
 from models.organization import Organization
 
 
@@ -10,7 +10,6 @@ def main():
     settings_manager.from_json(path=path)
     settings = settings_manager.settings
     organization = Organization(settings)
-    print("Organization INFO:")
     print(organization)
 
 
