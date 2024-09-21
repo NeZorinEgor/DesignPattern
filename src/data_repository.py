@@ -1,5 +1,3 @@
-
-
 class DataRepository:
     __data = {}
     __instance = None
@@ -16,3 +14,11 @@ class DataRepository:
     @property
     def data(self):
         return self.__data
+
+    def add_recipe(self, recipe):
+        if "recipes" not in self.__data:
+            self.__data["recipes"] = []
+        self.__data["recipes"].append(recipe)
+
+    def get_recipes(self):
+        return self.__data.get("recipes", [])

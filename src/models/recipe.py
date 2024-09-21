@@ -4,25 +4,20 @@ from src.core.model import BaseModel
 class Recipe(BaseModel):
     def __init__(self, name, ingredients, instructions):
         super().__init__()
-        self.__name = name
-        self.__ingredients = ingredients  # Список ингредиентов с единицами измерения
-        self.__instructions = instructions  # Инструкции приготовления
-
-    @property
-    def name(self):
-        return self.__name
-
-    @property
-    def ingredients(self):
-        return self.__ingredients
-
-    @property
-    def instructions(self):
-        return self.__instructions
+        self.name = name
+        self.ingredients = ingredients  # список ингредиентов
+        self.instructions = instructions  # текст инструкций
 
     def local_eq(self, other):
-        return self.name == other.name
+        return self.name == other.name and self.ingredients == other.ingredients
 
-    def __str__(self):
-        ingredients_str = ', '.join(self.ingredients)
-        return f"Рецепт: {self.name}, Ингредиенты: {ingredients_str}, Инструкции: {self.instructions}"
+
+class PersonalRecipe(Recipe):
+    def __init__(self, name, ingredients, instructions):
+        super().__init__(name, ingredients, instructions)
+
+
+class LessonRecipe(Recipe):
+    def __init__(self, name, ingredients, instructions, lesson_topic):
+        super().__init__(name, ingredients, instructions)
+        self.lesson_topic = lesson_topic  # тема занятия

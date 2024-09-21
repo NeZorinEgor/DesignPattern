@@ -1,8 +1,7 @@
 import os
-
-from src.data_repository import DataRepository
 from src.settings_manager import SettingsManager
 from models.organization import Organization
+from src.data_repository import DataRepository
 from src.start_service import StartService
 
 
@@ -14,17 +13,30 @@ def main():
     organization = Organization(settings)
     print(organization)
 
-    data_repository = DataRepository()
-    start_service = StartService(repository=data_repository, settings_manager=settings_manager)
-    start_service.create()
-    start_service.create_receipts()
-    print("Данные из репозитория:")
-    for key, value in data_repository.data.items():
-        if isinstance(value, list):
-            for item in value:
-                print(f"{key}: {item.name if hasattr(item, 'name') else item}")
-        else:
-            print(f"{key}: {value.name if hasattr(value, 'name') else value}")
+    repository = DataRepository()
+    start_service = StartService(repository, settings_manager)
+    personal_recipe_data = {
+        "name": "Мой личный борщ",
+        "ingredients": ["Свекла", "Капуста", "Морковь", "Картофель", "Мясо", "Соль"],
+        "instructions": "Нарезать овощи и варить на медленном огне 1 час."
+    }
+    lesson_recipe_data = {
+        "name": "Борщ на занятии",
+        "ingredients": ["Свекла", "Капуста", "Морковь", "Картофель", "Мясо", "Соль"],
+        "instructions": "Объяснить последовательность приготовления и варить в течение часа.",
+        "lesson_topic": "Классические супы"
+    }
+    start_service.create(personal_recipe_data, lesson_recipe_data)
+    print("\nСохраненные рецепты:")
+    for recipe in repository.get_recipes():
+        print(f"Рецепт: {recipe.name}, Ингредиенты: {recipe.ingredients}, UUID: {recipe.uuid}")
+    print("\nСохраненная номенклатура:")
+    print(repository.data["nomenclature"])
+    print("\nСохраненные группы:")
+    print(repository.data["group"])
+    print("\nСохраненные единицы измерения:")
+    for name, unit in repository.data["ranges"].items():
+        print(f"{name}: {unit}")
 
 
 if __name__ == "__main__":

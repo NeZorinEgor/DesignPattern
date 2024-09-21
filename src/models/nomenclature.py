@@ -19,3 +19,8 @@ class Nomenclature(BaseModel):
     @name.setter
     def name(self, new_name):
         self.__name = new_name
+
+    def __str__(self):
+        group_str = f"Группа: {self.__group}" if self.__group else "Группа: не указана"
+        range_str = f"Единица измерения: {self.__range}" if self.__range else "Единица измерения: не указана"
+        return f"Номенклатура: {self.name}, {group_str}, {range_str}"

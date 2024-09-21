@@ -1,8 +1,7 @@
 from src.errors.validator import Validator
-from src.models.recipe import Recipe
+from src.models.recipe import LessonRecipe, PersonalRecipe
 from src.settings_manager import SettingsManager
 from src.data_repository import DataRepository
-
 from src.models.group_nomenclature import GroupNomenclature
 from src.models.nomenclature import Nomenclature
 from src.models.range import Range
@@ -22,36 +21,58 @@ class StartService:
     def settings(self):
         return self.__settings_manager.settings
 
-    def create(self):
-        meter_range = Range(name="Грамм", conversion_factor=1.0)
+    def create_receipts(self, personal_recipe_data, lesson_recipe_data=None):
+        """
+        Формирует и сохраняет рецепты в зависимости от переданных данных.
 
-        length_group = GroupNomenclature()
+        :param personal_recipe_data: словарь с данными для личного рецепта
+        :param lesson_recipe_data: словарь с данными для рецепта на занятии (опционально)
+        """
 
+        # Создание личного рецепта
+        personal_recipe = PersonalRecipe(
+            name=personal_recipe_data["name"],
+            ingredients=personal_recipe_data["ingredients"],
+            instructions=personal_recipe_data["instructions"]
+        )
+
+        # Сохранение личного рецепта в репозиторий
+        self.__repository.add_recipe(personal_recipe)
+
+        # Если переданы данные для рецепта занятия, создаем и сохраняем его
+        if lesson_recipe_data:
+            lesson_recipe = LessonRecipe(
+                name=lesson_recipe_data["name"],
+                ingredients=lesson_recipe_data["ingredients"],
+                instructions=lesson_recipe_data["instructions"],
+                lesson_topic=lesson_recipe_data["lesson_topic"]
+            )
+            self.__repository.add_recipe(lesson_recipe)
+
+        print("Рецепты успешно созданы и сохранены в репозиторий.")
+
+    def create(self, personal_recipe_data, lesson_recipe_data=None):
+        """
+        Основной метод для создания данных. Вызывает создание рецептов, номенклатур, единиц измерения и групп.
+        :param personal_recipe_data: данные для создания личного рецепта
+        :param lesson_recipe_data: данные для создания рецепта занятия (опционально)
+        """
+
+        # Генерация данных для рецептов
+        self.create_receipts(personal_recipe_data, lesson_recipe_data)
+
+        # Генерация данных для номенклатур
         nomenclature = Nomenclature()
-        nomenclature.name = "Линейка"
-        nomenclature._Nomenclature__range = meter_range
-        nomenclature._Nomenclature__group = length_group
-
+        nomenclature.name = "Товар A"
         self.__repository.data["nomenclature"] = nomenclature
-        self.__repository.data["range"] = meter_range
-        self.__repository.data["group"] = length_group
 
-        print("Данные успешно созданы и сохранены в репозитории.")
+        # Генерация данных для групп
+        group = GroupNomenclature.create_base_group()
+        self.__repository.data["group"] = group
 
-    def create_receipts(self):
-        recipe1 = Recipe(
-            name="Паста",
-            ingredients=["200 г пасты", "1 л воды", "1 ч.л. соли", "1 ст.л. масла"],
-            instructions="Сварите пасту в подсоленной воде."
-        )
+        # Генерация данных для единиц измерения
+        kilogram = Range(name="Килограмм", conversion_factor=1.0)
+        gram = Range(name="Грамм", conversion_factor=0.001, base_unit=kilogram)
+        self.__repository.data["ranges"] = {"kilogram": kilogram, "gram": gram}
 
-        recipe2 = Recipe(
-            name="Салат",
-            ingredients=["2 огурца", "3 помидора", "2 ст.л. масла", "по вкусу соль"],
-            instructions="Нарежьте овощи и заправьте маслом."
-        )
-
-        self.__repository.data["recipes"] = [recipe1, recipe2]
-
-        print("Рецепты успешно созданы и сохранены в репозитории.")
-
+        print("Номенклатура, группы и единицы измерения успешно созданы и сохранены в репозиторий.")
