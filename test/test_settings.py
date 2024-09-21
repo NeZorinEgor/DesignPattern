@@ -2,7 +2,7 @@ import os.path
 
 import pytest
 
-from src.errors.base import InvalidLengthError
+from src.errors import InvalidLengthError
 from src.settings_manager import SettingsManager
 
 

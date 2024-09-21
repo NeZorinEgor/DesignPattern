@@ -1,4 +1,4 @@
-from src.errors.base import InvalidTypeError, InvalidLengthError
+from src.errors import InvalidTypeError, InvalidLengthError
 
 
 class Settings:
