@@ -1,13 +1,12 @@
-from abc import ABC
 
 
-class ABCRepository(ABC):
+class DataRepository:
     __data = {}
     __instance = None
 
     def __new__(cls, *args, **kwargs):
         if cls.__instance is None:
-            cls.__instance = super(ABCRepository, cls).__new__(cls, *args, **kwargs)
+            cls.__instance = super(DataRepository, cls).__new__(cls, *args, **kwargs)
         return cls.__instance
 
     @staticmethod
@@ -17,4 +16,3 @@ class ABCRepository(ABC):
     @property
     def data(self):
         return self.__data
-

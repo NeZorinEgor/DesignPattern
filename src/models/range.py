@@ -1,5 +1,4 @@
 class Range:
-
     def __init__(self, name, conversion_factor, base_unit=None):
         self.name = name
         self.conversion_factor = conversion_factor
