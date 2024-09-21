@@ -1,10 +1,10 @@
 from src.errors.validator import Validator
-from src.models.recipe import LessonRecipe, PersonalRecipe
 from src.settings_manager import SettingsManager
 from src.data_repository import DataRepository
 from src.models.group_nomenclature import GroupNomenclature
 from src.models.nomenclature import Nomenclature
 from src.models.range import Range
+from src.models.recipe import Recipe
 
 
 class StartService:
@@ -21,58 +21,85 @@ class StartService:
     def settings(self):
         return self.__settings_manager.settings
 
-    def create_receipts(self, personal_recipe_data, lesson_recipe_data=None):
+    def create_nomenclature(self):
         """
-        Формирует и сохраняет рецепты в зависимости от переданных данных.
-
-        :param personal_recipe_data: словарь с данными для личного рецепта
-        :param lesson_recipe_data: словарь с данными для рецепта на занятии (опционально)
+        Фабричный метод для создания номенклатуры.
         """
-
-        # Создание личного рецепта
-        personal_recipe = PersonalRecipe(
-            name=personal_recipe_data["name"],
-            ingredients=personal_recipe_data["ingredients"],
-            instructions=personal_recipe_data["instructions"]
-        )
-
-        # Сохранение личного рецепта в репозиторий
-        self.__repository.add_recipe(personal_recipe)
-
-        # Если переданы данные для рецепта занятия, создаем и сохраняем его
-        if lesson_recipe_data:
-            lesson_recipe = LessonRecipe(
-                name=lesson_recipe_data["name"],
-                ingredients=lesson_recipe_data["ingredients"],
-                instructions=lesson_recipe_data["instructions"],
-                lesson_topic=lesson_recipe_data["lesson_topic"]
-            )
-            self.__repository.add_recipe(lesson_recipe)
-
-        print("Рецепты успешно созданы и сохранены в репозиторий.")
-
-    def create(self, personal_recipe_data, lesson_recipe_data=None):
-        """
-        Основной метод для создания данных. Вызывает создание рецептов, номенклатур, единиц измерения и групп.
-        :param personal_recipe_data: данные для создания личного рецепта
-        :param lesson_recipe_data: данные для создания рецепта занятия (опционально)
-        """
-
-        # Генерация данных для рецептов
-        self.create_receipts(personal_recipe_data, lesson_recipe_data)
-
-        # Генерация данных для номенклатур
         nomenclature = Nomenclature()
         nomenclature.name = "Товар A"
         self.__repository.data["nomenclature"] = nomenclature
+        print("Номенклатура успешно создана и сохранена в репозиторий.")
 
-        # Генерация данных для групп
+    def create_group(self):
+        """
+        Фабричный метод для создания группы.
+        """
         group = GroupNomenclature.create_base_group()
         self.__repository.data["group"] = group
+        print("Группа успешно создана и сохранена в репозиторий.")
 
-        # Генерация данных для единиц измерения
-        kilogram = Range(name="Килограмм", conversion_factor=1.0)
-        gram = Range(name="Грамм", conversion_factor=0.001, base_unit=kilogram)
-        self.__repository.data["ranges"] = {"kilogram": kilogram, "gram": gram}
+    def create_units(self):
+        """
+        Фабричный метод для создания единиц измерения.
+        """
+        gram = Range(name="Грамм", conversion_factor=1.0)  # Грамм как базовая единица
+        kilogram = Range(name="Килограмм", conversion_factor=1000.0, base_unit=gram)  # Килограмм как производная
+        self.__repository.data["ranges"] = {"gram": gram, "kilogram": kilogram}
+        print("Единицы измерения успешно созданы и сохранены в репозиторий.")
 
-        print("Номенклатура, группы и единицы измерения успешно созданы и сохранены в репозиторий.")
+    def create_recipes(self):
+        """
+        Фабричный метод для создания рецептов.
+        """
+        pancake_recipe = Recipe(
+            name="Панкейки с черникой",
+            ingredients={
+                "Пшеничная мука": "200 гр",
+                "Молоко": "300 мл",
+                "Яйца": "2 шт",
+                "Сахар": "50 гр",
+                "Разрыхлитель теста": "10 гр",
+                "Соль": "1/2 ч.л.",
+                "Черника": "150 гр",
+                "Сливочное масло": "30 гр"
+            },
+            instructions="""
+                1. Подготовьте все ингредиенты. В глубокой миске смешайте муку, сахар, разрыхлитель и соль.
+                2. В отдельной миске взбейте яйца и добавьте молоко. Хорошо перемешайте.
+                3. Влейте яичную смесь в сухие ингредиенты и перемешайте до однородности.
+                4. В растопленное сливочное масло добавьте тесто и аккуратно перемешайте.
+                5. Добавьте чернику в тесто и осторожно перемешайте.
+                6. Разогрейте сковороду и готовьте панкейки до золотистого цвета.
+            """
+        )
+
+        salad_recipe = Recipe(
+            name="Греческий салат",
+            ingredients={
+                "Огурцы": "2 шт",
+                "Помидоры": "3 шт",
+                "Оливки": "50 гр",
+                "Фета": "100 гр",
+                "Оливковое масло": "2 ст.л.",
+                "Соль": "по вкусу",
+                "Перец": "по вкусу"
+            },
+            instructions="""
+                1. Нарежьте огурцы и помидоры крупными кубиками.
+                2. Добавьте оливки и фету.
+                3. Полейте оливковым маслом, посолите и поперчите по вкусу.
+                4. Перемешайте и подавайте.
+            """
+        )
+
+        self.__repository.data["recipes"] = [pancake_recipe, salad_recipe]
+        print("Рецепты успешно созданы и сохранены в репозиторий.")
+
+    def create(self):
+        """
+        Основной метод для создания данных: номенклатур, групп, единиц измерения и рецептов.
+        """
+        self.create_nomenclature()
+        self.create_group()
+        self.create_units()
+        self.create_recipes()

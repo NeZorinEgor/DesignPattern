@@ -3,18 +3,15 @@ from src.data_repository import DataRepository
 from src.models.nomenclature import Nomenclature
 from src.models.range import Range
 from src.models.group_nomenclature import GroupNomenclature
-from src.models.recipe import PersonalRecipe
+from src.models.recipe import Recipe
 
 
 @pytest.fixture
 def repository():
-    """Фикстура для создания репозитория данных перед каждым тестом."""
-    repo = DataRepository()
-    return repo
+    return DataRepository()
 
 
 def test_nomenclature(repository):
-    """Тест для проверки наличия номенклатуры."""
     nomenclature = Nomenclature()
     nomenclature.name = "Товар A"
     repository.data["nomenclature"] = nomenclature
@@ -23,20 +20,18 @@ def test_nomenclature(repository):
     assert repository.data["nomenclature"].name == "Товар A"
 
 
-def test_units_of_measurement(repository):
-    """Тест для проверки наличия единиц измерения."""
-    kilogram = Range(name="Килограмм", conversion_factor=1.0)
-    gram = Range(name="Грамм", conversion_factor=0.001, base_unit=kilogram)
-
-    repository.data["ranges"] = {"kilogram": kilogram, "gram": gram}
+def test_ranges(repository):
+    gram = Range(name="Грамм", conversion_factor=1.0)
+    kilogram = Range(name="Килограмм", conversion_factor=1000.0, base_unit=gram)
+    repository.data["ranges"] = {"gram": gram, "kilogram": kilogram}
 
     assert "ranges" in repository.data
+    assert "gram" in repository.data["ranges"]
     assert "kilogram" in repository.data["ranges"]
-    assert repository.data["ranges"]["kilogram"].name == "Килограмм"
+    assert repository.data["ranges"]["kilogram"].conversion_factor == 1000.0
 
 
-def test_groups(repository):
-    """Тест для проверки наличия групп."""
+def test_group_nomenclature(repository):
     group = GroupNomenclature.create_base_group()
     repository.data["group"] = group
 
@@ -45,10 +40,17 @@ def test_groups(repository):
 
 
 def test_recipes(repository):
-    """Тест для проверки наличия рецептов."""
-    recipe = PersonalRecipe(name="Мой личный борщ", ingredients=["Свекла", "Капуста"], instructions="Варить 1 час.")
-    repository.add_recipe(recipe)
+    recipe = Recipe(
+        name="Панкейки с черникой",
+        ingredients={
+            "Пшеничная мука": "200 гр",
+            "Молоко": "300 мл",
+            "Яйца": "2 шт"
+        },
+        instructions="Смешайте все ингредиенты и готовьте."
+    )
+    repository.data["recipes"] = [recipe]
 
-    assert len(repository.get_recipes()) > 0
-    assert repository.get_recipes()[0].name == "Мой личный борщ"
-
+    assert "recipes" in repository.data
+    assert len(repository.data["recipes"]) == 1
+    assert repository.data["recipes"][0].name == "Панкейки с черникой"

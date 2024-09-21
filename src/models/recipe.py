@@ -1,23 +1,16 @@
 from src.core.model import BaseModel
 
-
 class Recipe(BaseModel):
-    def __init__(self, name, ingredients, instructions):
+    def __init__(self, name, ingredients, instructions, lesson_topic=None):
         super().__init__()
         self.name = name
         self.ingredients = ingredients  # список ингредиентов
         self.instructions = instructions  # текст инструкций
+        self.lesson_topic = lesson_topic  # тема занятия (опционально)
 
     def local_eq(self, other):
         return self.name == other.name and self.ingredients == other.ingredients
 
-
-class PersonalRecipe(Recipe):
-    def __init__(self, name, ingredients, instructions):
-        super().__init__(name, ingredients, instructions)
-
-
-class LessonRecipe(Recipe):
-    def __init__(self, name, ingredients, instructions, lesson_topic):
-        super().__init__(name, ingredients, instructions)
-        self.lesson_topic = lesson_topic  # тема занятия
+    def __str__(self):
+        lesson_info = f" (Тема занятия: {self.lesson_topic})" if self.lesson_topic else ""
+        return f"Рецепт: {self.name}{lesson_info}\nИнгредиенты: {', '.join(self.ingredients)}\nИнструкции: {self.instructions}"
