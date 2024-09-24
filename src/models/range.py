@@ -11,8 +11,12 @@ class Range:
         return value / self.conversion_factor
 
     def __str__(self):
-        base_unit_str = f", базовая единица: {self.base_unit.name}" if self.base_unit != self else ""
-        return f"{self.name} (коэффициент пересчета: {self.conversion_factor}{base_unit_str})"
+        if self.base_unit == self:
+            base_unit_str = " (базовая единица)"
+        else:
+            base_unit_str = f", базовая единица: {self.base_unit.name}"
+
+        return f"{self.name}: коэффициент пересчета {self.conversion_factor}{base_unit_str}"
 
 
 # Создаем базовые единицы измерения

@@ -4,7 +4,6 @@ from src.core.model import BaseModel
 class Nomenclature(BaseModel):
     __name: str = ""
     __group = None
-    __range = None
 
     def __init__(self):
         super().__init__()
@@ -20,7 +19,21 @@ class Nomenclature(BaseModel):
     def name(self, new_name):
         self.__name = new_name
 
+    @property
+    def group(self):
+        return self.__group
+
+    @group.setter
+    def group(self, new_group) -> None:
+        self.__group = new_group
+
+    @staticmethod
+    def create(name: str, group=None):
+        item = Nomenclature()
+        item.name = name
+        item.group = group
+        return item
+
     def __str__(self):
-        group_str = f"Группа: {self.__group}" if self.__group else "Группа: не указана"
-        range_str = f"Единица измерения: {self.__range}" if self.__range else "Единица измерения: не указана"
-        return f"Номенклатура: {self.name}, {group_str}, {range_str}"
+        group_str = str(self.__group) if self.__group else "No group"
+        return f"Nomenclature: {self.__name}, Group: {group_str}"

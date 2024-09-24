@@ -49,19 +49,37 @@ class StartService:
         """
         Фабричный метод для создания рецептов.
         """
-        # Рецепт панкейков
+        ingredients = [
+            Ingredient(range=gram, nomenclature=Nomenclature.create("Пшеничная мука", group="бакалея"), quantity=200),
+            Ingredient(range=milliliter, nomenclature=Nomenclature.create("Молоко", group="Молочные продукты"),
+                       quantity=300),
+            Ingredient(range=piece, nomenclature=Nomenclature.create("Яйца", group="Дairy"), quantity=2),
+            Ingredient(range=gram, nomenclature=Nomenclature.create("Сахар", group="Бакалея"), quantity=50),
+            Ingredient(range=gram, nomenclature=Nomenclature.create("Разрыхлитель теста", group="Бакалея"),
+                       quantity=10),
+            Ingredient(range=teaspoon, nomenclature=Nomenclature.create("Соль", group="Приправы"), quantity=0.5),
+            # 1/2 чайной ложки
+            Ingredient(range=gram, nomenclature=Nomenclature.create("Черника", group="Фрукты"), quantity=150),
+            Ingredient(range=gram, nomenclature=Nomenclature.create("Сливочное масло", group="Молочные продукты"),
+                       quantity=30),
+        ]
+        steps = [
+            "Подготовьте все ингредиенты. В глубокой миске смешайте муку, сахар, разрыхлитель и соль.",
+            "В отдельной миске взбейте яйца и добавьте молоко. Хорошо перемешайте.",
+            "Влейте яичную смесь в сухие ингредиенты и перемешайте до однородности. Постарайтесь не перебить тесто, небольшие комочки допустимы.",
+            "В растопленное сливочное масло добавьте тесто и аккуратно перемешайте.",
+            "Добавьте чернику в тесто и осторожно перемешайте, чтобы не повредить ягоды.",
+            "Разогрейте сковороду на среднем огне и слегка смажьте ее маслом.",
+            "Вылейте половник теста на сковороду. Готовьте до появления пузырьков на поверхности, затем переверните и жарьте до золотистого цвета.",
+            "Повторяйте процесс, пока не израсходуете все тесто.",
+            "Подавайте панкейки горячими, можно с медом или кленовым сиропом.",
+        ]
+
         pancake_recipe = Recipe(
-            name="Панкейки с черникой",
-            ingredients=[
-                Ingredient(name="Пшеничная мука", unit=Range(name="kg", base_unit=gram, conversion_factor=200)),
-                Ingredient(name="Молоко", unit=Range(name="milliliter", base_unit=milliliter, conversion_factor=300)),
-                Ingredient(name="Яйца", unit=Range(name="piece", base_unit=piece, conversion_factor=2)),
-                Ingredient(name="Сахар", unit=Range(name="gram", base_unit=gram, conversion_factor=50)),
-                Ingredient(name="Разрыхлитель теста", unit=Range(name="gram", base_unit=gram, conversion_factor=10)),
-                Ingredient(name="Соль", unit=Range(name="teaspoon", base_unit=teaspoon, conversion_factor=0.5)),
-                Ingredient(name="Черника", unit=Range(name="gram", base_unit=gram, conversion_factor=150)),
-                Ingredient(name="Сливочное масло", unit=Range(name="gram", base_unit=gram, conversion_factor=30)),
-            ],
+            name="ПАНКЕЙКИ С ЧЕРНИКОЙ",
+            ingredients=ingredients,
+            steps=steps,
+            cooking_time_by_min=25
         )
 
         # Рецепт греческого салата

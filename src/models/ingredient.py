@@ -1,20 +1,49 @@
 from src.core.model import BaseModel
-from src.models.range import Range
+from src.errors.validator import Validator
+from src.models.nomenclature import Nomenclature
+from src.models.range import Range, gram
 
 
 class Ingredient(BaseModel):
-    def __init__(self, name: str, unit: Range):
+    def local_eq(self, other):
+        return self.nomenclature == other.nomenclature
+
+    def __init__(self, range: Range = None, nomenclature: Nomenclature = None, quantity: int | float = 0):
         super().__init__()
-        self.name = name
-        self.unit = unit  # Свойство для хранения единицы измерения
+        Validator.validate(range, type_=Range)
+        Validator.validate(nomenclature, type_=Nomenclature)
+        Validator.validate(quantity, type_=int | float)   # как Optional
+        self.__range = range
+        self.__nomenclature = nomenclature
+        self.__quantity = quantity
 
-    def local_eq(self, other: object) -> bool:
-        if isinstance(other, Ingredient):
-            return self.name == other.name and self.unit == other.unit
-        return False
+    @property
+    def range(self):
+        return self.__range
 
-    def __str__(self) -> str:
-        return f"Ingredient(name={self.name}, unit={self.unit})"
+    @range.setter
+    def range(self, value: Range):
+        if not isinstance(value, Range):
+            raise ValueError("Expected a Range instance.")
+        self.__range = value
 
-    def __repr__(self) -> str:
-        return f"Ingredient(name={self.name}, unit={repr(self.unit)})"
+    @property
+    def nomenclature(self):
+        return self.__nomenclature
+
+    @nomenclature.setter
+    def nomenclature(self, value: Nomenclature):
+        if not isinstance(value, Nomenclature):
+            raise ValueError("Expected a Nomenclature instance.")
+        self.__nomenclature = value
+
+    @property
+    def quantity(self):
+        return self.__quantity
+
+    @quantity.setter
+    def quantity(self, value: int):
+        self.__quantity = value
+
+    def __str__(self):
+        return f"Ingredient: {self.nomenclature.name}, Quantity: {self.quantity}, Range: {self.range.base_unit}"
