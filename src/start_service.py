@@ -8,9 +8,6 @@ from src.models.recipe import Recipe
 
 
 class StartService:
-    __repository: DataRepository = None
-    __settings_manager: SettingsManager = None
-
     def __init__(self, repository: DataRepository, settings_manager: SettingsManager):
         Validator.validate(repository, DataRepository)
         Validator.validate(settings_manager, SettingsManager)

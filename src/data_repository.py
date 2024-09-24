@@ -1,3 +1,7 @@
+from src.errors.custom import InvalidTypeError, InvalidLengthError
+from src.errors.validator import Validator
+
+
 class DataRepository:
     __data = {}
     __instance = None
@@ -42,6 +46,7 @@ class DataRepository:
 
     def add_recipe(self, recipe):
         """Специальный метод для добавления рецептов."""
+        Validator.validate(recipe, type_=dict)  # Пример валидации
         self.add_item(self.receipt_key(), recipe)
 
     def get_recipes(self):
@@ -50,6 +55,7 @@ class DataRepository:
 
     def add_group(self, group):
         """Метод для добавления групп."""
+        Validator.validate(group, type_=dict)  # Пример валидации
         self.add_item(self.group_key(), group)
 
     def get_groups(self):
@@ -58,6 +64,7 @@ class DataRepository:
 
     def add_nomenclature(self, nomenclature):
         """Метод для добавления номенклатуры."""
+        Validator.validate(nomenclature, type_=dict)  # Пример валидации
         self.add_item(self.nomenclature_key(), nomenclature)
 
     def get_nomenclature(self):
@@ -66,6 +73,7 @@ class DataRepository:
 
     def add_unit(self, unit):
         """Метод для добавления единиц измерения."""
+        Validator.validate(unit, type_=dict)  # Пример валидации
         self.add_item(self.unit_key(), unit)
 
     def get_units(self):
