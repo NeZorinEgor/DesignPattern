@@ -1,6 +1,6 @@
 import os
 
-from src.managers.settings import SettingsManager
+from src.settings_manager import SettingsManager
 from src.models.organization import Organization
 
 

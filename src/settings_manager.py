@@ -1,8 +1,8 @@
 import json
 import os
 
-from src.errors.base import InvalidTypeError
 from src.errors.proxy import ErrorProxy
+from src.errors.custom import InvalidTypeError
 from src.models.settings import Settings
 
 

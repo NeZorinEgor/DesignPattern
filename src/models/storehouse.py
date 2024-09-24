@@ -1,4 +1,4 @@
-from src.contracts.base_model import BaseModel
+from src.core.model import BaseModel
 
 
 class Storehouse(BaseModel):

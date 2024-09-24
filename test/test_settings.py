@@ -2,8 +2,8 @@ import os.path
 
 import pytest
 
-from src.errors.base import InvalidLengthError
-from src.managers.settings import SettingsManager
+from src.errors.custom import InvalidLengthError
+from src.settings_manager import SettingsManager
 
 
 def test_no_load_settings():

@@ -1,5 +1,5 @@
 from src.models.settings import Settings
-from src.contracts.base_model import BaseModel
+from src.core.model import BaseModel
 
 
 class Organization(BaseModel):
