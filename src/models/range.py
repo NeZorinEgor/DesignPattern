@@ -15,3 +15,9 @@ class Range:
         return f"{self.name} (коэффициент пересчета: {self.conversion_factor}{base_unit_str})"
 
 
+# Создаем базовые единицы измерения
+gram = Range(name="gram", conversion_factor=1.0)
+milliliter = Range(name="milliliter", conversion_factor=1.0)
+piece = Range(name="piece", conversion_factor=1.0)
+teaspoon = Range(name="teaspoon", conversion_factor=1.0)  # Чайная ложка
+tablespoon = Range(name="tablespoon", conversion_factor=1.0)  # Столовая ложка

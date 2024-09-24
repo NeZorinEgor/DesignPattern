@@ -4,7 +4,7 @@ from src.settings_manager import SettingsManager
 from src.data_repository import DataRepository
 from src.models.group_nomenclature import GroupNomenclature
 from src.models.nomenclature import Nomenclature
-from src.models.range import Range
+from src.models.range import Range, gram, milliliter, piece, teaspoon, tablespoon
 from src.models.recipe import Recipe
 
 
@@ -49,13 +49,6 @@ class StartService:
         """
         Фабричный метод для создания рецептов.
         """
-        # Создаем базовые единицы измерения
-        gram = Range(name="gram", conversion_factor=1.0)
-        milliliter = Range(name="milliliter", conversion_factor=1.0)
-        piece = Range(name="piece", conversion_factor=1.0)
-        teaspoon = Range(name="teaspoon", conversion_factor=1.0)  # Чайная ложка
-        tablespoon = Range(name="tablespoon", conversion_factor=1.0)  # Столовая ложка
-
         # Рецепт панкейков
         pancake_recipe = Recipe(
             name="Панкейки с черникой",
