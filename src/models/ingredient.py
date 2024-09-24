@@ -17,6 +17,13 @@ class Ingredient(BaseModel):
         self.__nomenclature = nomenclature
         self.__quantity = quantity
 
+    def to_dict(self):
+        return {
+            "ingredient": self.nomenclature.name,
+            "quantity": self.quantity,
+            "range": str(self.range)
+        }
+
     @property
     def range(self):
         return self.__range

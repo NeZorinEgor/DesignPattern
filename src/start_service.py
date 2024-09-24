@@ -51,17 +51,13 @@ class StartService:
         """
         ingredients = [
             Ingredient(range=gram, nomenclature=Nomenclature.create("Пшеничная мука", group="бакалея"), quantity=200),
-            Ingredient(range=milliliter, nomenclature=Nomenclature.create("Молоко", group="Молочные продукты"),
-                       quantity=300),
-            Ingredient(range=piece, nomenclature=Nomenclature.create("Яйца", group="Дairy"), quantity=2),
+            Ingredient(range=milliliter, nomenclature=Nomenclature.create("Молоко", group="Молочные продукты"), quantity=300),
+            Ingredient(range=piece, nomenclature=Nomenclature.create("Яйца", group="Яйца"), quantity=2),
             Ingredient(range=gram, nomenclature=Nomenclature.create("Сахар", group="Бакалея"), quantity=50),
-            Ingredient(range=gram, nomenclature=Nomenclature.create("Разрыхлитель теста", group="Бакалея"),
-                       quantity=10),
+            Ingredient(range=gram, nomenclature=Nomenclature.create("Разрыхлитель теста", group="Бакалея"), quantity=10),
             Ingredient(range=teaspoon, nomenclature=Nomenclature.create("Соль", group="Приправы"), quantity=0.5),
-            # 1/2 чайной ложки
-            Ingredient(range=gram, nomenclature=Nomenclature.create("Черника", group="Фрукты"), quantity=150),
-            Ingredient(range=gram, nomenclature=Nomenclature.create("Сливочное масло", group="Молочные продукты"),
-                       quantity=30),
+            Ingredient(range=gram, nomenclature=Nomenclature.create("Черника", group="Ягода"), quantity=150),
+            Ingredient(range=gram, nomenclature=Nomenclature.create("Сливочное масло", group="Молочные продукты"), quantity=30),
         ]
         steps = [
             "Подготовьте все ингредиенты. В глубокой миске смешайте муку, сахар, разрыхлитель и соль.",
@@ -82,20 +78,30 @@ class StartService:
             cooking_time_by_min=25
         )
 
-        # Рецепт греческого салата
+        ingredients2 = [
+            Ingredient(range=piece, nomenclature=Nomenclature.create("Огурцы", group="Овощи"), quantity=2),
+            Ingredient(range=piece, nomenclature=Nomenclature.create("Помидоры", group="Овощи"), quantity=3),
+            Ingredient(range=gram, nomenclature=Nomenclature.create("Оливки", group="Закуски"), quantity=50),
+            Ingredient(range=gram, nomenclature=Nomenclature.create("Фета", group="Молочные продукты"), quantity=100),
+            Ingredient(range=tablespoon, nomenclature=Nomenclature.create("Оливковое масло", group="Приправы"), quantity=2),
+            Ingredient(range=gram, nomenclature=Nomenclature.create("Соль", group="Приправы"), quantity=0),  # По вкусу
+            Ingredient(range=gram, nomenclature=Nomenclature.create("Перец", group="Приправы"), quantity=0),  # По вкусу
+        ]
+
+        # Шаги приготовления
+        steps2 = [
+            "Нарежьте огурцы и помидоры крупными кубиками.",
+            "Добавьте оливки и фету.",
+            "Полейте оливковым маслом, посолите и поперчите по вкусу.",
+            "Перемешайте и подавайте.",
+        ]
+
+        # Создание рецепта
         salad_recipe = Recipe(
-            name="Греческий салат",
-            ingredients=[
-                Ingredient(name="Огурцы", unit=Range(name="piece", base_unit=piece, conversion_factor=2)),
-                Ingredient(name="Помидоры", unit=Range(name="piece", base_unit=piece, conversion_factor=3)),
-                Ingredient(name="Оливки", unit=Range(name="gram", base_unit=gram, conversion_factor=50)),
-                Ingredient(name="Фета", unit=Range(name="gram", base_unit=gram, conversion_factor=100)),
-                Ingredient(name="Оливковое масло",
-                           unit=Range(name="tablespoon", base_unit=tablespoon, conversion_factor=2)),
-                Ingredient(name="Соль", unit=Range(name="taste", conversion_factor=1.0)),
-                # "по вкусу" — условная единица
-                Ingredient(name="Перец", unit=Range(name="taste", conversion_factor=1.0)),  # "по вкусу"
-            ],
+            name="ГРЕЧЕСКИЙ САЛАТ",
+            ingredients=ingredients2,
+            steps=steps2,
+            cooking_time_by_min=15  # Время приготовления
         )
 
         self.__repository.data["recipes"] = [pancake_recipe, salad_recipe]
