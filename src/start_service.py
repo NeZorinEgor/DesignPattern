@@ -1,4 +1,5 @@
 from src.errors.validator import Validator
+from src.models.ingredient import Ingredient
 from src.settings_manager import SettingsManager
 from src.data_repository import DataRepository
 from src.models.group_nomenclature import GroupNomenclature
@@ -48,45 +49,42 @@ class StartService:
         """
         Фабричный метод для создания рецептов.
         """
+        # Создаем базовые единицы измерения
+        gram = Range(name="gram", conversion_factor=1.0)
+        milliliter = Range(name="milliliter", conversion_factor=1.0)
+        piece = Range(name="piece", conversion_factor=1.0)
+        teaspoon = Range(name="teaspoon", conversion_factor=1.0)  # Чайная ложка
+        tablespoon = Range(name="tablespoon", conversion_factor=1.0)  # Столовая ложка
+
+        # Рецепт панкейков
         pancake_recipe = Recipe(
             name="Панкейки с черникой",
-            ingredients={
-                "Пшеничная мука": "200 гр",
-                "Молоко": "300 мл",
-                "Яйца": "2 шт",
-                "Сахар": "50 гр",
-                "Разрыхлитель теста": "10 гр",
-                "Соль": "1/2 ч.л.",
-                "Черника": "150 гр",
-                "Сливочное масло": "30 гр"
-            },
-            instructions="""
-                1. Подготовьте все ингредиенты. В глубокой миске смешайте муку, сахар, разрыхлитель и соль.
-                2. В отдельной миске взбейте яйца и добавьте молоко. Хорошо перемешайте.
-                3. Влейте яичную смесь в сухие ингредиенты и перемешайте до однородности.
-                4. В растопленное сливочное масло добавьте тесто и аккуратно перемешайте.
-                5. Добавьте чернику в тесто и осторожно перемешайте.
-                6. Разогрейте сковороду и готовьте панкейки до золотистого цвета.
-            """
+            ingredients=[
+                Ingredient(name="Пшеничная мука", unit=Range(name="kg", base_unit=gram, conversion_factor=200)),
+                Ingredient(name="Молоко", unit=Range(name="milliliter", base_unit=milliliter, conversion_factor=300)),
+                Ingredient(name="Яйца", unit=Range(name="piece", base_unit=piece, conversion_factor=2)),
+                Ingredient(name="Сахар", unit=Range(name="gram", base_unit=gram, conversion_factor=50)),
+                Ingredient(name="Разрыхлитель теста", unit=Range(name="gram", base_unit=gram, conversion_factor=10)),
+                Ingredient(name="Соль", unit=Range(name="teaspoon", base_unit=teaspoon, conversion_factor=0.5)),
+                Ingredient(name="Черника", unit=Range(name="gram", base_unit=gram, conversion_factor=150)),
+                Ingredient(name="Сливочное масло", unit=Range(name="gram", base_unit=gram, conversion_factor=30)),
+            ],
         )
 
+        # Рецепт греческого салата
         salad_recipe = Recipe(
             name="Греческий салат",
-            ingredients={
-                "Огурцы": "2 шт",
-                "Помидоры": "3 шт",
-                "Оливки": "50 гр",
-                "Фета": "100 гр",
-                "Оливковое масло": "2 ст.л.",
-                "Соль": "по вкусу",
-                "Перец": "по вкусу"
-            },
-            instructions="""
-                1. Нарежьте огурцы и помидоры крупными кубиками.
-                2. Добавьте оливки и фету.
-                3. Полейте оливковым маслом, посолите и поперчите по вкусу.
-                4. Перемешайте и подавайте.
-            """
+            ingredients=[
+                Ingredient(name="Огурцы", unit=Range(name="piece", base_unit=piece, conversion_factor=2)),
+                Ingredient(name="Помидоры", unit=Range(name="piece", base_unit=piece, conversion_factor=3)),
+                Ingredient(name="Оливки", unit=Range(name="gram", base_unit=gram, conversion_factor=50)),
+                Ingredient(name="Фета", unit=Range(name="gram", base_unit=gram, conversion_factor=100)),
+                Ingredient(name="Оливковое масло",
+                           unit=Range(name="tablespoon", base_unit=tablespoon, conversion_factor=2)),
+                Ingredient(name="Соль", unit=Range(name="taste", conversion_factor=1.0)),
+                # "по вкусу" — условная единица
+                Ingredient(name="Перец", unit=Range(name="taste", conversion_factor=1.0)),  # "по вкусу"
+            ],
         )
 
         self.__repository.data["recipes"] = [pancake_recipe, salad_recipe]
