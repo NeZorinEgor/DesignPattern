@@ -27,8 +27,7 @@ class CSVReport(ABCReport):
                 value = str(value)
             values.append(value)
         values_str = ";".join(values)
-        print(header)
-        print(values_str)
+        return f"{header}\n{values_str}"
 
 
 class MarkdownReport(ABCReport):
@@ -135,29 +134,3 @@ class ReportFactory:
                 return RTFReport()
             case _:
                 raise ValueError("Неподдерживаемый формат отчета")
-
-
-salad_recipe = Recipe(
-            name="Греческий салат",
-            ingredients=[
-                Ingredient(name="Огурцы", unit=Range(name="piece", base_unit=piece, conversion_factor=2)),
-                Ingredient(name="Помидоры", unit=Range(name="piece", base_unit=piece, conversion_factor=3)),
-                Ingredient(name="Оливки", unit=Range(name="gram", base_unit=gram, conversion_factor=50)),
-                Ingredient(name="Фета", unit=Range(name="gram", base_unit=gram, conversion_factor=100)),
-                Ingredient(name="Оливковое масло",
-                           unit=Range(name="tablespoon", base_unit=tablespoon, conversion_factor=2)),
-                Ingredient(name="Соль", unit=Range(name="taste", conversion_factor=1.0)),
-                # "по вкусу" — условная единица
-                Ingredient(name="Перец", unit=Range(name="taste", conversion_factor=1.0)),
-            ],
-        )
-
-report_fabric = ReportFactory()
-
-print(report_fabric.create(FormatEnum.CSV).create(salad_recipe))
-print(report_fabric.create(FormatEnum.MARKDOWN).create(salad_recipe))
-print(report_fabric.create(FormatEnum.JSON).create(salad_recipe))
-print(report_fabric.create(FormatEnum.XML).create(salad_recipe))
-print(report_fabric.create(FormatEnum.RTF).create(salad_recipe))
-
-
