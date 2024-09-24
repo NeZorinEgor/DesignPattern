@@ -1,3 +1,5 @@
+import os.path
+
 import pytest
 
 from src.core.report import FormatEnum
@@ -71,10 +73,38 @@ def test_json_report():
     assert report == expected_json
 
 
-
-
 # Тест для RTF отчета
 def test_rtf_report():
     report = report_fabric.create(FormatEnum.RTF).create(salad_recipe)
     expected_rtf = '''{\\rtf1\\ansi\n{\\b name\\cell ingredients\\cell lesson_topic \\row\nГреческий салат \\cell Ingredient(name=Огурцы, unit=piece (коэффициент пересчета: 2, базовая единица: piece)), Ingredient(name=Помидоры, unit=piece (коэффициент пересчета: 3, базовая единица: piece)), Ingredient(name=Оливки, unit=gram (коэффициент пересчета: 50, базовая единица: gram)), Ingredient(name=Фета, unit=gram (коэффициент пересчета: 100, базовая единица: gram)), Ingredient(name=Оливковое масло, unit=tablespoon (коэффициент пересчета: 2, базовая единица: tablespoon)), Ingredient(name=Соль, unit=taste (коэффициент пересчета: 1.0)), Ingredient(name=Перец, unit=taste (коэффициент пересчета: 1.0)) \\cell None \\cell \\row\n}\n}'''
     assert report == expected_rtf
+
+
+# Тест для создания файлов отчетов
+def test_create_report_files():
+    # Папка для сохранения отчетов
+    dir_to_save = os.path.join(os.pardir, "docs", "reports")
+    os.makedirs(dir_to_save, exist_ok=True)  # Создаем папку, если она не существует
+
+    # Словарь для хранения форматов и соответствующих расширений файлов
+    formats = {
+        FormatEnum.CSV: "report.csv",
+        FormatEnum.MARKDOWN: "report.md",
+        FormatEnum.JSON: "report.json",
+        FormatEnum.XML: "report.xml",
+        FormatEnum.RTF: "report.rtf"
+    }
+
+    for report_format, file_name in formats.items():
+        report_content = report_fabric.create(report_format).create(salad_recipe)
+        file_path = os.path.join(dir_to_save, file_name)
+
+        with open(file_path, mode="w") as report_file:
+            report_file.write(report_content)
+
+        # Проверяем, что файл был создан
+        assert os.path.exists(file_path)
+
+    # Очистка созданных файлов
+    for file_name in formats.values():
+        os.remove(os.path.join(dir_to_save, file_name))
