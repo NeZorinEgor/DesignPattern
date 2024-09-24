@@ -1,4 +1,6 @@
+from src.core.report import FormatEnum
 from src.errors.custom import InvalidTypeError, InvalidLengthError
+from src.errors.validator import Validator
 
 
 class Settings:
@@ -9,12 +11,22 @@ class Settings:
     __bic: str = ""
     __name: str = ""
     __type_of_ownership: str = ""
+    __report_format: FormatEnum = FormatEnum.CSV
 
     def __str__(self):
         return (f"INN: {self.__inn} \nACCOUNT: {self.__account} \n"
                 f"CORRESPONDENT_ACCOUNT: {self.__correspondent_account} \n"
                 f"BIC: {self.__bic} \nNAME: {self.__name} \n"
                 f"TYPE_OF_OWNERSHIP: {self.__type_of_ownership}")
+
+    @property
+    def report_format(self) -> FormatEnum:
+        return self.__report_format
+
+    @report_format.setter
+    def report_format(self, new_format) -> None:
+        Validator.validate(new_format, FormatEnum)
+        self.__report_format = new_format
 
     @property
     def inn(self) -> str:

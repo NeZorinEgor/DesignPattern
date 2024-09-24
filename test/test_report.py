@@ -1,14 +1,13 @@
-import os.path
-
-import pytest
+import os
 
 from src.core.report import FormatEnum
 from src.models.ingredient import Ingredient
 from src.models.range import Range, piece, gram, tablespoon
 from src.models.recipe import Recipe
 from src.report import ReportFactory
+from src.settings_manager import SettingsManager
 
-
+# Создаем экземпляр рецепта
 salad_recipe = Recipe(
     name="Греческий салат",
     ingredients=[
@@ -22,12 +21,16 @@ salad_recipe = Recipe(
     ],
 )
 
-report_fabric = ReportFactory()
+# Инициализируем менеджер настроек и устанавливаем формат отчета
+settings_manager = SettingsManager()
+settings_manager.settings.report_format = FormatEnum.CSV  # Установите нужный формат отчета
+
+report_fabric = ReportFactory(settings_manager.settings)  # Передаем настройки в фабрику отчетов
 
 
 # Тест для CSV отчета
 def test_csv_report():
-    report = report_fabric.create(FormatEnum.CSV).create(salad_recipe)
+    report = report_fabric.create(salad_recipe)
     expected_header = "name;ingredients;lesson_topic"
     expected_data = "Греческий салат;[Ingredient(name=Огурцы, unit=piece (коэффициент пересчета: 2, базовая единица: piece)), Ingredient(name=Помидоры, unit=piece (коэффициент пересчета: 3, базовая единица: piece)), Ingredient(name=Оливки, unit=gram (коэффициент пересчета: 50, базовая единица: gram)), Ingredient(name=Фета, unit=gram (коэффициент пересчета: 100, базовая единица: gram)), Ingredient(name=Оливковое масло, unit=tablespoon (коэффициент пересчета: 2, базовая единица: tablespoon)), Ingredient(name=Соль, unit=taste (коэффициент пересчета: 1.0)), Ingredient(name=Перец, unit=taste (коэффициент пересчета: 1.0))];None"
 
@@ -37,7 +40,8 @@ def test_csv_report():
 
 # Тест для Markdown отчета
 def test_markdown_report():
-    report = report_fabric.create(FormatEnum.MARKDOWN).create(salad_recipe)
+    settings_manager.settings.report_format = FormatEnum.MARKDOWN  # Установите формат
+    report = report_fabric.create(salad_recipe)
     expected_report = (
         "# Греческий салат\n\n"
         "name | ingredients | lesson_topic\n"
@@ -56,7 +60,8 @@ def test_markdown_report():
 
 # Тест для JSON отчета
 def test_json_report():
-    report = report_fabric.create(FormatEnum.JSON).create(salad_recipe)
+    settings_manager.settings.report_format = FormatEnum.JSON  # Установите формат
+    report = report_fabric.create(salad_recipe)
     expected_json = '''{
     "name": "Греческий салат",
     "ingredients": [
@@ -75,7 +80,8 @@ def test_json_report():
 
 # Тест для RTF отчета
 def test_rtf_report():
-    report = report_fabric.create(FormatEnum.RTF).create(salad_recipe)
+    settings_manager.settings.report_format = FormatEnum.RTF  # Установите формат
+    report = report_fabric.create(salad_recipe)
     expected_rtf = '''{\\rtf1\\ansi\n{\\b name\\cell ingredients\\cell lesson_topic \\row\nГреческий салат \\cell Ingredient(name=Огурцы, unit=piece (коэффициент пересчета: 2, базовая единица: piece)), Ingredient(name=Помидоры, unit=piece (коэффициент пересчета: 3, базовая единица: piece)), Ingredient(name=Оливки, unit=gram (коэффициент пересчета: 50, базовая единица: gram)), Ingredient(name=Фета, unit=gram (коэффициент пересчета: 100, базовая единица: gram)), Ingredient(name=Оливковое масло, unit=tablespoon (коэффициент пересчета: 2, базовая единица: tablespoon)), Ingredient(name=Соль, unit=taste (коэффициент пересчета: 1.0)), Ingredient(name=Перец, unit=taste (коэффициент пересчета: 1.0)) \\cell None \\cell \\row\n}\n}'''
     assert report == expected_rtf
 
@@ -96,7 +102,8 @@ def test_create_report_files():
     }
 
     for report_format, file_name in formats.items():
-        report_content = report_fabric.create(report_format).create(salad_recipe)
+        settings_manager.settings.report_format = report_format  # Устанавливаем формат
+        report_content = report_fabric.create(salad_recipe)
         file_path = os.path.join(dir_to_save, file_name)
 
         with open(file_path, mode="w") as report_file:

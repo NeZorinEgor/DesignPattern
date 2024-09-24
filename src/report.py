@@ -3,6 +3,7 @@ from xml.etree.ElementTree import tostring, Element
 
 from src.core.report import ABCReport, FormatEnum
 from src.errors.validator import Validator
+from src.models.settings import Settings
 
 
 class CSVReport(ABCReport):
@@ -115,19 +116,30 @@ class RTFReport(ABCReport):
 
 
 class ReportFactory:
+    report_classes = {
+        FormatEnum.CSV: CSVReport,
+        FormatEnum.MARKDOWN: MarkdownReport,
+        FormatEnum.JSON: JSONReport,
+        FormatEnum.XML: XMLReport,
+        FormatEnum.RTF: RTFReport,
+    }
+
+    def __init__(self, settings: Settings):
+        self.settings = settings  # Инкапсуляция настроек
+
     @staticmethod
-    def create(report_format):
+    def set_format(report_format):
         Validator.validate(report_format, FormatEnum)
-        match report_format:
-            case FormatEnum.CSV:
-                return CSVReport()
-            case FormatEnum.MARKDOWN:
-                return MarkdownReport()
-            case FormatEnum.JSON:
-                return JSONReport()
-            case FormatEnum.XML:
-                return XMLReport()
-            case FormatEnum.RTF:
-                return RTFReport()
-            case _:
-                raise ValueError("Неподдерживаемый формат отчета")
+
+        report_class = ReportFactory.report_classes.get(report_format)
+        if report_class is None:
+            raise ValueError("Неподдерживаемый формат отчета")
+
+        return report_class()
+
+    def create(self, data):
+        """Создает отчет в зависимости от текущих настроек."""
+        report_format = self.settings.report_format
+        report_class = self.set_format(report_format)
+        return report_class.create(data)
+
