@@ -66,6 +66,6 @@ class Recipe(BaseModel):
         steps_str = "\n".join(f"{i + 1}. {step}" for i, step in enumerate(self.steps))
 
         return f"Рецепт: {self.name}\n" \
-               f"Ингредиенты: {ingredients_str}\n" \
+               f"Ингредиенты: \n{ingredients_str}\n" \
                f"Время приготовления: {self.cooking_time_by_min}\n" \
                f"Шаги приготовления:\n{steps_str}"

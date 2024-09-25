@@ -58,4 +58,4 @@ class Nomenclature(BaseModel):
 
     def __str__(self):
         group_str = str(self.__group) if self.__group else "Нету группы"
-        return f"Nomenclature: {self.__name}, Group: {group_str}, Range: {self.__range}"
+        return f"Продукт: {self.__name}, Группа: {group_str}, Единица: {self.__range}"

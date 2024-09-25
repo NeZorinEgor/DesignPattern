@@ -18,4 +18,4 @@ class GroupNomenclature(BaseModel):
         return item
 
     def __str__(self):
-        return f"Группа: {self.__name}"
+        return f"{self.__name}"

@@ -14,7 +14,7 @@ class Range:
         return value / self.__conversion_factor
 
     def __str__(self):
-        return f"Единица измерения: {self.__name}"
+        return f"{self.__name}"
 
     @staticmethod
     def create(name, conversion_factor, base_unit=None):

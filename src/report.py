@@ -1,10 +1,15 @@
 import json
+import os.path
 from xml.etree.ElementTree import tostring, Element
 
 from src.core.report import ABCReport, FormatEnum
+from src.data_repository import DataRepository
 from src.errors.proxy import ErrorProxy
 from src.errors.validator import Validator
 from src.models.settings import Settings
+
+from src.settings_manager import SettingsManager
+from src.start_service import StartService
 
 
 class CSVReport(ABCReport):
@@ -70,12 +75,14 @@ class JSONReport(ABCReport):
 
     @staticmethod
     def create(data):
-        fields = {
-            field: getattr(data, field) if field != 'ingredients' else [ingredient.to_dict() for ingredient in
-                                                                        data.ingredients]
-            for field in vars(data).keys() if not field.startswith("_")
-        }
-        return json.dumps(fields, indent=3, ensure_ascii=False, default=str)
+        fields = {field: getattr(data, field) for field in vars(data).keys() if not field.startswith("_")}
+        return [i for i in vars(data).keys()]
+        # fields = {
+        #     field: getattr(data, field) if field != 'ingredients' else [ingredient.to_dict() for ingredient in
+        #                                                                 data.ingredients]
+        #     for field in vars(data).keys() if not field.startswith("_")
+        # }
+        # return json.dumps(fields, indent=3, ensure_ascii=False, default=str)
 
 
 class XMLReport(ABCReport):
@@ -169,3 +176,18 @@ class ReportFactory:
         except Exception as e:
             self.error_proxy.error_message = str(e)
             return None
+
+
+settings_manager = SettingsManager()
+settings_manager.from_json(os.path.join(os.pardir, "settings.json"))
+repository = DataRepository()
+service = StartService(repository)
+service.create()
+recipe = repository.data[DataRepository.recipe_id()][0]
+
+
+factory = ReportFactory(settings_manager.settings)
+factory.set_format(FormatEnum.JSON)
+r = JSONReport()
+print(r.create(recipe))
+print(recipe)
