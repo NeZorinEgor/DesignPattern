@@ -2,6 +2,7 @@ from src.errors.proxy import ErrorProxy
 from src.errors.validator import Validator
 from src.data_repository import DataRepository
 from src.models.group_nomenclature import GroupNomenclature
+from src.models.ingredient import Ingredient
 from src.models.nomenclature import Nomenclature
 from src.models.range import Range
 from src.models.recipe import Recipe
@@ -67,16 +68,16 @@ class StartService:
 
     def __create_recipe(self):
         try:
-            ingredients = {
-                self.__nomenclatures["Пшеничная мука"]: 200,  # 200 гр
-                self.__nomenclatures["Молоко"]: 300,  # 300 мл
-                self.__nomenclatures["Яйцо"]: 2,  # 2 шт
-                self.__nomenclatures["Сахар"]: 50,  # 50 гр
-                self.__nomenclatures["Разрыхлитель теста"]: 10,  # 10 гр
-                self.__nomenclatures["Соль"]: 0.5,  # 1/2 ч.л. (0.5 ч.л.)
-                self.__nomenclatures["Черника"]: 150,  # 150 гр
-                self.__nomenclatures["Сливочное масло"]: 30  # 30 гр
-            }
+            ingredients = [
+                Ingredient(nomenclature=self.__nomenclatures["Пшеничная мука"], quantity=200),  # 200 гр
+                Ingredient(nomenclature=self.__nomenclatures["Молоко"], quantity=300),  # 300 мл
+                Ingredient(nomenclature=self.__nomenclatures["Яйцо"], quantity=2),  # 2 шт
+                Ingredient(nomenclature=self.__nomenclatures["Сахар"], quantity=50),  # 50 гр
+                Ingredient(nomenclature=self.__nomenclatures["Разрыхлитель теста"], quantity=10),  # 10 гр
+                Ingredient(nomenclature=self.__nomenclatures["Соль"], quantity=0.5),  # 1/2 ч.л. (0.5 ч.л.)
+                Ingredient(nomenclature=self.__nomenclatures["Черника"], quantity=150),  # 150 гр
+                Ingredient(nomenclature=self.__nomenclatures["Сливочное масло"], quantity=30)  # 30 гр
+            ]
 
             steps = [
                 "Подготовьте все ингредиенты. В глубокой миске смешайте муку, сахар, разрыхлитель и соль.",
@@ -94,7 +95,7 @@ class StartService:
 
             recipe = Recipe.create(
                 name="Панкейки с черникой",
-                ingredients=ingredients,
+                ingredients=ingredients,  # Используем список ингредиентов
                 steps=steps,
                 cooking_time_by_min=cooking_time
             )

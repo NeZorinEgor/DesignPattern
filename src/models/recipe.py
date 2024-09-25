@@ -1,12 +1,12 @@
-from typing import List, Dict
+from typing import List
 from src.core.model import BaseModel
 from src.errors.validator import Validator
-from src.models.nomenclature import Nomenclature
+from src.models.ingredient import Ingredient
 
 
 class Recipe(BaseModel):
     __name: str
-    __ingredients: Dict[Nomenclature, int]   # номенклатура: её количество
+    __ingredients: List[Ingredient]   # Список объектов Ingredient
     __steps: List[str]
     __cooking_time_by_min: float | int
 
@@ -24,8 +24,8 @@ class Recipe(BaseModel):
         return self.__ingredients
 
     @ingredients.setter
-    def ingredients(self, value: dict):
-        Validator.validate(value, type_=dict)
+    def ingredients(self, value: List[Ingredient]):
+        Validator.validate(value, type_=List[Ingredient])
         self.__ingredients = value
 
     @property
@@ -47,7 +47,7 @@ class Recipe(BaseModel):
         self.__cooking_time_by_min = value
 
     @staticmethod
-    def create(name: str, ingredients: dict, steps: List[str], cooking_time_by_min: float | int):
+    def create(name: str, ingredients: List[Ingredient], steps: List[str], cooking_time_by_min: float | int):
         recipe = Recipe()
         recipe.name = name
         recipe.ingredients = ingredients
@@ -62,10 +62,10 @@ class Recipe(BaseModel):
         return self.name == other.name and self.ingredients == other.ingredients
 
     def __str__(self):
-        ingredients_str = ", ".join(str(ingredient) for ingredient in self.ingredients)
+        ingredients_str = "\n".join(str(ingredient) for ingredient in self.ingredients)
         steps_str = "\n".join(f"{i + 1}. {step}" for i, step in enumerate(self.steps))
 
         return f"Рецепт: {self.name}\n" \
                f"Ингредиенты: \n{ingredients_str}\n" \
-               f"Время приготовления: {self.cooking_time_by_min}\n" \
+               f"Время приготовления: {self.cooking_time_by_min} минут\n" \
                f"Шаги приготовления:\n{steps_str}"
