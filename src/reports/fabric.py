@@ -2,6 +2,7 @@ import os.path
 
 from src.core.report import FormatEnum
 from src.data_repository import DataRepository
+from src.errors.custom import InvalidTypeError
 from src.errors.proxy import ErrorProxy
 from src.errors.validator import Validator
 from src.models.settings import Settings
@@ -34,7 +35,7 @@ class ReportFactory:
 
         report_class = ReportFactory.report_classes.get(report_format)
         if report_class is None:
-            raise ValueError("Неподдерживаемый формат отчета")
+            raise InvalidTypeError("Неподдерживаемый формат отчета")
 
         return report_class()
 

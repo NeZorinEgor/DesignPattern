@@ -16,9 +16,8 @@ class ABCReport(ABC):
     """
     __format: FormatEnum = FormatEnum.CSV
 
-    @staticmethod
     @abstractmethod
-    def create(data):
+    def create(self, data):
         pass
 
     def _to_serializable(self, val):
