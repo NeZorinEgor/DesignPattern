@@ -1,24 +1,64 @@
-from typing import List
-
+from typing import List, Dict
 from src.core.model import BaseModel
 from src.errors.validator import Validator
-from src.models.ingredient import Ingredient
-
+from src.models.nomenclature import Nomenclature
 
 
 class Recipe(BaseModel):
-    def __init__(self, name, ingredients, steps, cooking_time_by_min):
-        super().__init__()
-        Validator.validate(name, type_=str)
-        Validator.validate(ingredients, type_=List[Ingredient])
-        Validator.validate(steps, type_=List[str])
-        Validator.validate(cooking_time_by_min, type_=int | float)
-        self.name = name
-        self.ingredients: list[Ingredient] = ingredients
-        self.steps = steps
-        self.cooking_time_by_min = cooking_time_by_min
+    __name: str
+    __ingredients: Dict[Nomenclature, int]   # номенклатура: её количество
+    __steps: List[str]
+    __cooking_time_by_min: float | int
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, value: str):
+        Validator.validate(value, type_=str)
+        self.__name = value
+
+    @property
+    def ingredients(self):
+        return self.__ingredients
+
+    @ingredients.setter
+    def ingredients(self, value: dict):
+        Validator.validate(value, type_=dict)
+        self.__ingredients = value
+
+    @property
+    def steps(self):
+        return self.__steps
+
+    @steps.setter
+    def steps(self, value: List[str]):
+        Validator.validate(value, type_=List[str])
+        self.__steps = value
+
+    @property
+    def cooking_time_by_min(self):
+        return self.__cooking_time_by_min
+
+    @cooking_time_by_min.setter
+    def cooking_time_by_min(self, value: float | int):
+        Validator.validate(value, type_=int | float)
+        self.__cooking_time_by_min = value
+
+    @staticmethod
+    def create(name: str, ingredients: dict, steps: List[str], cooking_time_by_min: float | int):
+        recipe = Recipe()
+        recipe.name = name
+        recipe.ingredients = ingredients
+        recipe.steps = steps
+        recipe.cooking_time_by_min = cooking_time_by_min
+        return recipe
 
     def local_eq(self, other):
+        return self.name == other.name and self.ingredients == other.ingredients
+
+    def __eq__(self, other):
         return self.name == other.name and self.ingredients == other.ingredients
 
     def __str__(self):

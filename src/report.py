@@ -1,12 +1,10 @@
 import json
-import os.path
 from xml.etree.ElementTree import tostring, Element
 
 from src.core.report import ABCReport, FormatEnum
+from src.errors.proxy import ErrorProxy
 from src.errors.validator import Validator
-
 from src.models.settings import Settings
-from src.settings_manager import SettingsManager
 
 
 class CSVReport(ABCReport):
@@ -18,15 +16,24 @@ class CSVReport(ABCReport):
         # Поля класса
         fields = list(filter(lambda x: not x.startswith("_"), vars(data).keys()))
         header = ";".join(fields)
+
         # Формирование значений
         values = []
         for field in fields:
             value = getattr(data, field)
             if isinstance(value, list):
-                value = "[" + ", ".join(str(item) for item in value) + "]"
+                if field == 'ingredients':
+                    # Обработка списка ингредиентов
+                    value = "[" + "; ".join(
+                        f"{ingredient.nomenclature.name}: {ingredient.quantity} {ingredient.range}"
+                        for ingredient in value
+                    ) + "]"
+                else:
+                    value = "[" + ", ".join(str(item) for item in value) + "]"
             else:
                 value = str(value)
             values.append(value)
+
         values_str = ";".join(values)
         return f"{header}\n{values_str}"
 
@@ -63,9 +70,12 @@ class JSONReport(ABCReport):
 
     @staticmethod
     def create(data):
-        # Формирование JSON
-        fields = {field: getattr(data, field) for field in vars(data).keys() if not field.startswith("_")}
-        return json.dumps(fields, indent=4, ensure_ascii=False, default=str)
+        fields = {
+            field: getattr(data, field) if field != 'ingredients' else [ingredient.to_dict() for ingredient in
+                                                                        data.ingredients]
+            for field in vars(data).keys() if not field.startswith("_")
+        }
+        return json.dumps(fields, indent=3, ensure_ascii=False, default=str)
 
 
 class XMLReport(ABCReport):
@@ -82,13 +92,23 @@ class XMLReport(ABCReport):
         for key, value in fields.items():
             child = Element(key)
             if isinstance(value, list):
-                child.text = ", ".join(str(item) for item in value)
+                if key == 'ingredients':
+                    # Обработка списка ингредиентов
+                    for ingredient in value:
+                        ingredient_element = Element("ingredient")
+                        ingredient_element.set("name", ingredient.nomenclature.name)
+                        ingredient_element.set("quantity", str(ingredient.quantity))
+                        ingredient_element.set("unit", ingredient.range.name)
+                        child.append(ingredient_element)
+                else:
+                    child.text = ", ".join(str(item) for item in value)
             else:
                 child.text = str(value)
             root.append(child)
 
-        # Преобразование в строку XML
-        return tostring(root, encoding="unicode")
+        # Преобразование в строку XML с заголовком
+        xml_declaration = '<?xml version="1.0" encoding="UTF-8"?>\n'
+        return xml_declaration + tostring(root, encoding="unicode")
 
 
 class RTFReport(ABCReport):
@@ -127,7 +147,8 @@ class ReportFactory:
     }
 
     def __init__(self, settings: Settings):
-        self.settings = settings  # Инкапсуляция настроек
+        self.settings = settings
+        self.error_proxy = ErrorProxy()
 
     @staticmethod
     def set_format(report_format):
@@ -141,48 +162,10 @@ class ReportFactory:
 
     def create(self, data):
         """Создает отчет в зависимости от текущих настроек."""
-        report_format = self.settings.report_format
-        report_class = self.set_format(report_format)
-        return report_class.create(data)
-
-
-from src.models.ingredient import Ingredient
-from src.models.nomenclature import Nomenclature
-from src.models.range import gram, milliliter, piece, teaspoon
-from src.models.recipe import Recipe
-
-ingredients = [
-    Ingredient(range=gram, nomenclature=Nomenclature.create("Пшеничная мука", group="бакалея"), quantity=200),
-    Ingredient(range=milliliter, nomenclature=Nomenclature.create("Молоко", group="Молочные продукты"), quantity=300),
-    Ingredient(range=piece, nomenclature=Nomenclature.create("Яйца", group="Яйца"), quantity=2),
-    Ingredient(range=gram, nomenclature=Nomenclature.create("Сахар", group="Бакалея"), quantity=50),
-    Ingredient(range=gram, nomenclature=Nomenclature.create("Разрыхлитель теста", group="Бакалея"), quantity=10),
-    Ingredient(range=teaspoon, nomenclature=Nomenclature.create("Соль", group="Приправы"), quantity=0.5),
-    Ingredient(range=gram, nomenclature=Nomenclature.create("Черника", group="Ягода"), quantity=150),
-    Ingredient(range=gram, nomenclature=Nomenclature.create("Сливочное масло", group="Молочные продукты"), quantity=30),
-]
-steps = [
-    "Подготовьте все ингредиенты. В глубокой миске смешайте муку, сахар, разрыхлитель и соль.",
-    "В отдельной миске взбейте яйца и добавьте молоко. Хорошо перемешайте.",
-    "Влейте яичную смесь в сухие ингредиенты и перемешайте до однородности. Постарайтесь не перебить тесто, небольшие комочки допустимы.",
-    "В растопленное сливочное масло добавьте тесто и аккуратно перемешайте.",
-    "Добавьте чернику в тесто и осторожно перемешайте, чтобы не повредить ягоды.",
-    "Разогрейте сковороду на среднем огне и слегка смажьте ее маслом.",
-    "Вылейте половник теста на сковороду. Готовьте до появления пузырьков на поверхности, затем переверните и жарьте до золотистого цвета.",
-    "Повторяйте процесс, пока не израсходуете все тесто.",
-    "Подавайте панкейки горячими, можно с медом или кленовым сиропом.",
-]
-
-pancake_recipe = Recipe(
-    name="ПАНКЕЙКИ С ЧЕРНИКОЙ",
-    ingredients=ingredients,
-    steps=steps,
-    cooking_time_by_min=25
-)
-
-manager = SettingsManager()
-manager.from_json(os.path.join(os.pardir, "settings.json"))
-manager.settings.report_format = FormatEnum.JSON
-factory = ReportFactory(manager.settings)
-print(factory.create(pancake_recipe))
-
+        try:
+            report_format = self.settings.report_format
+            report_class = self.set_format(report_format)
+            return report_class.create(data)
+        except Exception as e:
+            self.error_proxy.error_message = str(e)
+            return None

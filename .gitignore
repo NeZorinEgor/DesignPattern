@@ -11,3 +11,4 @@
 /__pycache__/
 /src/contract.py
 /src/main.py
+/src/models/ingredient.py

@@ -1,21 +1,21 @@
 from src.core.model import BaseModel
-from src.errors.validator import Validator
 
 
 class GroupNomenclature(BaseModel):
-    __nomenclature_type = ""
+    __name = ""
 
-    def __init__(self, nomenclature_type="No group"):
-        super().__init__()
-        Validator.validate(nomenclature_type, type_=str)
-        self.__nomenclature_type = nomenclature_type
+    @property
+    def name(self):
+        return self.__name
 
     def local_eq(self, other):
-        return self.__nomenclature_type == other.__nomenclature_type
+        return self.__name == other.__name
 
     @staticmethod
-    def create_base_group():
-        return GroupNomenclature()
+    def create(name="Сырье"):
+        item = GroupNomenclature()
+        item.__name = name
+        return item
 
     def __str__(self):
-        return f"Группа номенклатуры: {self.__nomenclature_type}, UUID: {self.uuid}"
+        return f"Группа: {self.__name}"

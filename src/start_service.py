@@ -1,64 +1,82 @@
 from src.errors.validator import Validator
-from src.models.ingredient import Ingredient
-from src.settings_manager import SettingsManager
 from src.data_repository import DataRepository
 from src.models.group_nomenclature import GroupNomenclature
 from src.models.nomenclature import Nomenclature
-from src.models.range import Range, gram, milliliter, piece, teaspoon, tablespoon
+from src.models.range import Range
 from src.models.recipe import Recipe
 
 
 class StartService:
-    def __init__(self, repository: DataRepository, settings_manager: SettingsManager):
+    __repository: DataRepository
+    __nomenclatures: dict = {}
+
+    def __init__(self, repository):
         Validator.validate(repository, DataRepository)
-        Validator.validate(settings_manager, SettingsManager)
         self.__repository = repository
-        self.__settings_manager = settings_manager
 
-    @property
-    def settings(self):
-        return self.__settings_manager.settings
-
-    def create_nomenclature(self):
+    def __create_groups(self):
         """
-        Фабричный метод для создания номенклатуры.
+        Стартовый набор групп
         """
-        nomenclature = Nomenclature()
-        nomenclature.name = "Товар A"
-        self.__repository.data["nomenclature"] = nomenclature
-        print("Номенклатура успешно создана и сохранена в репозиторий.")
-
-    def create_group(self):
-        """
-        Фабричный метод для создания группы.
-        """
-        group = GroupNomenclature.create_base_group()
-        self.__repository.data["group"] = group
-        print("Группа успешно создана и сохранена в репозиторий.")
-
-    def create_units(self):
-        """
-        Фабричный метод для создания единиц измерения.
-        """
-        gram = Range(name="Грамм", conversion_factor=1.0)  # Грамм как базовая единица
-        kilogram = Range(name="Килограмм", conversion_factor=1000.0, base_unit=gram)  # Килограмм как производная
-        self.__repository.data["ranges"] = {"gram": gram, "kilogram": kilogram}
-        print("Единицы измерения успешно созданы и сохранены в репозиторий.")
-
-    def create_recipes(self):
-        """
-        Фабричный метод для создания рецептов.
-        """
-        ingredients = [
-            Ingredient(range=gram, nomenclature=Nomenclature.create("Пшеничная мука", group="бакалея"), quantity=200),
-            Ingredient(range=milliliter, nomenclature=Nomenclature.create("Молоко", group="Молочные продукты"), quantity=300),
-            Ingredient(range=piece, nomenclature=Nomenclature.create("Яйца", group="Яйца"), quantity=2),
-            Ingredient(range=gram, nomenclature=Nomenclature.create("Сахар", group="Бакалея"), quantity=50),
-            Ingredient(range=gram, nomenclature=Nomenclature.create("Разрыхлитель теста", group="Бакалея"), quantity=10),
-            Ingredient(range=teaspoon, nomenclature=Nomenclature.create("Соль", group="Приправы"), quantity=0.5),
-            Ingredient(range=gram, nomenclature=Nomenclature.create("Черника", group="Ягода"), quantity=150),
-            Ingredient(range=gram, nomenclature=Nomenclature.create("Сливочное масло", group="Молочные продукты"), quantity=30),
+        items = [
+            GroupNomenclature.create(name="Бакалея"),
+            GroupNomenclature.create(name="Молочные продукты"),
+            GroupNomenclature.create(name="Яйца"),
+            GroupNomenclature.create(name="Яйца"),
+            GroupNomenclature.create(name="Приправы"),
+            GroupNomenclature.create(name="Ягода"),
         ]
+        self.__repository.data[DataRepository.group_id()] = items
+
+    def __create_range(self):
+        """
+        Стартовый набор единиц измерения
+        """
+        gram = Range.create(name="грамм", conversion_factor=1.0)
+        milliliter = Range.create(name="миллилитр", conversion_factor=1.0)
+        piece = Range.create(name="шт.", conversion_factor=1.0)
+        teaspoon = Range.create(name="чайная ложка", conversion_factor=1.0)
+        tablespoon = Range.create(name="столовая ложка", conversion_factor=1.0)
+        self.__repository.data[DataRepository.range_id()] = [gram, milliliter, piece, teaspoon, tablespoon]
+
+    def __create_nomenclature(self):
+        # Получаем необходимые единицы измерения и группы
+        gram = self.__repository.data[DataRepository.range_id()][0]
+        milliliter = self.__repository.data[DataRepository.range_id()][1]
+        piece = self.__repository.data[DataRepository.range_id()][2]
+        teaspoon = self.__repository.data[DataRepository.range_id()][3]
+
+        group_grocery = [i for i in self.__repository.data[DataRepository.group_id()] if i.name == "Бакалея"][0]
+        group_dairy = [i for i in self.__repository.data[DataRepository.group_id()] if i.name == "Молочные продукты"][0]
+        group_eggs = [i for i in self.__repository.data[DataRepository.group_id()] if i.name == "Яйца"][0]
+        group_berries = [i for i in self.__repository.data[DataRepository.group_id()] if i.name == "Ягода"][0]
+
+        # Создаем номенклатуры на основе рецепта
+        self.__nomenclatures["Пшеничная мука"] = Nomenclature.create(name="Пшеничная мука", group=group_grocery, range=gram)
+        self.__nomenclatures["Молоко"] = Nomenclature.create(name="Молоко", group=group_dairy, range=milliliter)
+        self.__nomenclatures["Яйцо"] = Nomenclature.create(name="Яйцо", group=group_eggs, range=piece)
+        self.__nomenclatures["Сахар"] = Nomenclature.create(name="Сахар", group=group_grocery, range=gram)
+        self.__nomenclatures["Разрыхлитель теста"] = Nomenclature.create(name="Разрыхлитель теста", group=group_grocery, range=gram)
+        self.__nomenclatures["Соль"] = Nomenclature.create(name="Соль", group=group_grocery, range=teaspoon)
+        self.__nomenclatures["Черника"] = Nomenclature.create(name="Черника", group=group_berries, range=gram)
+        self.__nomenclatures["Сливочное масло"] = Nomenclature.create(name="Сливочное масло", group=group_dairy, range=gram)
+
+        # Сохраняем номенклатуры в репозиторий
+        self.__repository.data[DataRepository.nomenclature_id()] = list(self.__nomenclatures.values())
+
+    def __create_recipe(self):
+        # Определяем ингредиенты для рецепта
+        ingredients = {
+            self.__nomenclatures["Пшеничная мука"]: 200,  # 200 гр
+            self.__nomenclatures["Молоко"]: 300,  # 300 мл
+            self.__nomenclatures["Яйцо"]: 2,  # 2 шт
+            self.__nomenclatures["Сахар"]: 50,  # 50 гр
+            self.__nomenclatures["Разрыхлитель теста"]: 10,  # 10 гр
+            self.__nomenclatures["Соль"]: 0.5,  # 1/2 ч.л. (0.5 ч.л.)
+            self.__nomenclatures["Черника"]: 150,  # 150 гр
+            self.__nomenclatures["Сливочное масло"]: 30  # 30 гр
+        }
+
         steps = [
             "Подготовьте все ингредиенты. В глубокой миске смешайте муку, сахар, разрыхлитель и соль.",
             "В отдельной миске взбейте яйца и добавьте молоко. Хорошо перемешайте.",
@@ -68,50 +86,32 @@ class StartService:
             "Разогрейте сковороду на среднем огне и слегка смажьте ее маслом.",
             "Вылейте половник теста на сковороду. Готовьте до появления пузырьков на поверхности, затем переверните и жарьте до золотистого цвета.",
             "Повторяйте процесс, пока не израсходуете все тесто.",
-            "Подавайте панкейки горячими, можно с медом или кленовым сиропом.",
+            "Подавайте панкейки горячими, можно с медом или кленовым сиропом."
         ]
 
-        pancake_recipe = Recipe(
-            name="ПАНКЕЙКИ С ЧЕРНИКОЙ",
+        cooking_time = 25  # Время приготовления в минутах
+
+        # Создаем рецепт
+        recipe = Recipe.create(
+            name="Панкейки с черникой",
             ingredients=ingredients,
             steps=steps,
-            cooking_time_by_min=25
+            cooking_time_by_min=cooking_time
         )
 
-        ingredients2 = [
-            Ingredient(range=piece, nomenclature=Nomenclature.create("Огурцы", group="Овощи"), quantity=2),
-            Ingredient(range=piece, nomenclature=Nomenclature.create("Помидоры", group="Овощи"), quantity=3),
-            Ingredient(range=gram, nomenclature=Nomenclature.create("Оливки", group="Закуски"), quantity=50),
-            Ingredient(range=gram, nomenclature=Nomenclature.create("Фета", group="Молочные продукты"), quantity=100),
-            Ingredient(range=tablespoon, nomenclature=Nomenclature.create("Оливковое масло", group="Приправы"), quantity=2),
-            Ingredient(range=gram, nomenclature=Nomenclature.create("Соль", group="Приправы"), quantity=0),  # По вкусу
-            Ingredient(range=gram, nomenclature=Nomenclature.create("Перец", group="Приправы"), quantity=0),  # По вкусу
-        ]
-
-        # Шаги приготовления
-        steps2 = [
-            "Нарежьте огурцы и помидоры крупными кубиками.",
-            "Добавьте оливки и фету.",
-            "Полейте оливковым маслом, посолите и поперчите по вкусу.",
-            "Перемешайте и подавайте.",
-        ]
-
-        # Создание рецепта
-        salad_recipe = Recipe(
-            name="ГРЕЧЕСКИЙ САЛАТ",
-            ingredients=ingredients2,
-            steps=steps2,
-            cooking_time_by_min=15  # Время приготовления
-        )
-
-        self.__repository.data["recipes"] = [pancake_recipe, salad_recipe]
-        print("Рецепты успешно созданы и сохранены в репозиторий.")
+        # Сохраняем рецепт в репозиторий (при необходимости)
+        self.__repository.data[DataRepository.recipe_id()] = [recipe]
 
     def create(self):
-        """
-        Основной метод для создания данных: номенклатур, групп, единиц измерения и рецептов.
-        """
-        self.create_nomenclature()
-        self.create_group()
-        self.create_units()
-        self.create_recipes()
+        self.__create_groups()
+        self.__create_range()
+        self.__create_nomenclature()
+        self.__create_recipe()
+
+
+# Пример использования
+r = DataRepository()
+s = StartService(r)
+s.create()
+
+print(r.data[DataRepository.recipe_id()][0])  # Печатаем созданный рецепт
