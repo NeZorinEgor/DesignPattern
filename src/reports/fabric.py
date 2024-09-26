@@ -49,15 +49,16 @@ class ReportFactory:
             self.error_proxy.error_message = str(e)
             return None
 
-
-settings_manager = SettingsManager()
-settings_manager.from_json(os.path.join(os.pardir, "settings.json"))
-repository = DataRepository()
-service = StartService(repository)
-service.create()
-recipe = repository.data[DataRepository.recipe_id()][0]
-
-factory = ReportFactory(settings_manager.settings)
-creator = factory.set_format(FormatEnum.JSON)
-
-print(creator.create(recipe))
+# TODO: add fixture to test
+# # Настройки для фабрики
+# settings_manager = SettingsManager()
+# settings_manager.from_json(os.path.join(os.pardir, "settings.json"))
+# # Создание инстанса рецепта
+# repository = DataRepository()
+# service = StartService(repository)
+# service.create()
+# recipe = repository.data[DataRepository.recipe_id()][0]
+# # Фабрика отчетности
+# factory = ReportFactory(settings_manager.settings)
+# creator = factory.set_format(FormatEnum.JSON)
+# print(creator.create(recipe))
