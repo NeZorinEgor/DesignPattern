@@ -20,7 +20,18 @@ class CSVReport(ABCReport):
         writer.writerow(fields)
 
         # Записываем данные
-        writer.writerow(self._to_serializable(getattr(data, field)) for field in fields)
+        writer.writerow([self._format_value(getattr(data, field)) for field in fields])
 
         # Возвращаем результат в формате CSV
         return output.getvalue()
+
+    def _format_value(self, value):
+        """
+        Вспомогательная функция для обработки значений в строковый вид для CSV
+        """
+        if isinstance(value, list):
+            return '; '.join(self._format_value(v) for v in value)
+        elif isinstance(value, dict):
+            return '; '.join(f'{k}: {self._format_value(v)}' for k, v in value.items())
+        else:
+            return str(value)

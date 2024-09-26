@@ -40,4 +40,3 @@ class ABCReport(ABC):
     @property
     def format(self):
         return self.__format
-

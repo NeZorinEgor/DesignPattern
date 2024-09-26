@@ -58,6 +58,6 @@ service.create()
 recipe = repository.data[DataRepository.recipe_id()][0]
 
 factory = ReportFactory(settings_manager.settings)
-creator = factory.set_format(FormatEnum.JSON)
+creator = factory.set_format(FormatEnum.MARKDOWN)
 
 print(creator.create(recipe))
