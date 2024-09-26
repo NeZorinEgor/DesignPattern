@@ -5,121 +5,121 @@
             "nomenclature": {
                 "group": {
                     "name": "Бакалея",
-                    "uuid": "b40dbd4f-6628-460d-95b8-6726cb58dc42"
+                    "uuid": "edcf2f68-987d-4645-865f-529df232fc63"
                 },
                 "name": "Пшеничная мука",
                 "range": {
                     "name": "грамм"
                 },
-                "uuid": "7cd33e78-b69a-46ee-9453-aa60c42180c0"
+                "uuid": "a7d570fb-0573-48a2-adb1-9be9a0adac53"
             },
             "quantity": "200",
-            "uuid": "c149a451-2025-4d9f-b66b-4ad46a1c8147"
+            "uuid": "d8dce960-cb44-4b64-be0f-2af76c325c77"
         },
         {
             "nomenclature": {
                 "group": {
                     "name": "Молочные продукты",
-                    "uuid": "264f0234-fa88-4e79-9267-49621210b16b"
+                    "uuid": "63267058-1df0-4a2e-bb73-153a92130fdb"
                 },
                 "name": "Молоко",
                 "range": {
                     "name": "миллилитр"
                 },
-                "uuid": "98d87608-2de6-432b-b4a3-bd715ae8080f"
+                "uuid": "3b9062ae-6955-4364-baf1-ce9faa8f8970"
             },
             "quantity": "300",
-            "uuid": "4cfcfbe0-1eb8-4890-9493-3da3c679f494"
+            "uuid": "c3ecf10e-4407-4743-b514-e6e96dad3e74"
         },
         {
             "nomenclature": {
                 "group": {
                     "name": "Яйца",
-                    "uuid": "2cd30c45-dcb6-40be-b703-d211c99ea23d"
+                    "uuid": "b23fc4c9-5453-47cb-9756-ebc880cf6837"
                 },
                 "name": "Яйцо",
                 "range": {
                     "name": "шт."
                 },
-                "uuid": "207ab021-e552-4393-b545-9cfb467a44a9"
+                "uuid": "2f57ac29-4ed5-4f75-af5f-a207d9b8cd0a"
             },
             "quantity": "2",
-            "uuid": "d6796ea3-0e07-42d8-8e45-4d748674b187"
+            "uuid": "9f0b9478-e7cc-4e6f-b5a5-d7a5845d45d1"
         },
         {
             "nomenclature": {
                 "group": {
                     "name": "Бакалея",
-                    "uuid": "b40dbd4f-6628-460d-95b8-6726cb58dc42"
+                    "uuid": "edcf2f68-987d-4645-865f-529df232fc63"
                 },
                 "name": "Сахар",
                 "range": {
                     "name": "грамм"
                 },
-                "uuid": "243532af-6078-461b-b5c9-44800c44ff4d"
+                "uuid": "97731710-0837-42cf-999b-db49b764c271"
             },
             "quantity": "50",
-            "uuid": "803f1f4e-83c4-4e44-81dc-98b3c9cfcffb"
+            "uuid": "e9bce00f-84c7-4165-a216-7d312c6a6dd7"
         },
         {
             "nomenclature": {
                 "group": {
                     "name": "Бакалея",
-                    "uuid": "b40dbd4f-6628-460d-95b8-6726cb58dc42"
+                    "uuid": "edcf2f68-987d-4645-865f-529df232fc63"
                 },
                 "name": "Разрыхлитель теста",
                 "range": {
                     "name": "грамм"
                 },
-                "uuid": "015d9886-7859-43e0-b78a-23e1f85d285b"
+                "uuid": "6b36f1ec-fa73-4fad-a635-4a50a7500f0d"
             },
             "quantity": "10",
-            "uuid": "65509457-516f-4696-a9bd-78f85d8ec670"
+            "uuid": "5f0a3af3-9356-4681-8392-33181d343552"
         },
         {
             "nomenclature": {
                 "group": {
                     "name": "Бакалея",
-                    "uuid": "b40dbd4f-6628-460d-95b8-6726cb58dc42"
+                    "uuid": "edcf2f68-987d-4645-865f-529df232fc63"
                 },
                 "name": "Соль",
                 "range": {
                     "name": "чайная ложка"
                 },
-                "uuid": "7f54cb42-0cea-4842-b548-2d335e200739"
+                "uuid": "325d96d7-f994-480b-8b0e-dc71b6dc0928"
             },
             "quantity": "0.5",
-            "uuid": "aac2448d-c16d-4911-81e3-9aafb837731f"
+            "uuid": "a3db3c82-0269-4129-b983-d22648d72cf4"
         },
         {
             "nomenclature": {
                 "group": {
                     "name": "Ягода",
-                    "uuid": "0e1bf0cb-3db1-4802-8227-d5adc9e6d768"
+                    "uuid": "41a004bb-6fb0-4e12-aba3-bfde47983678"
                 },
                 "name": "Черника",
                 "range": {
                     "name": "грамм"
                 },
-                "uuid": "60ff9331-39ed-4f48-abc3-3d2874cf22fc"
+                "uuid": "0b79ad50-0c2a-4d7b-909d-70766874d4f6"
             },
             "quantity": "150",
-            "uuid": "e2d6b36d-894f-4d57-8838-c78a5f9ed17b"
+            "uuid": "b8322298-6af3-4f5d-87fb-66178ad379c0"
         },
         {
             "nomenclature": {
                 "group": {
                     "name": "Молочные продукты",
-                    "uuid": "264f0234-fa88-4e79-9267-49621210b16b"
+                    "uuid": "63267058-1df0-4a2e-bb73-153a92130fdb"
                 },
                 "name": "Сливочное масло",
                 "range": {
                     "name": "грамм"
                 },
-                "uuid": "01227c20-1ed9-42cc-8181-78386ebd91fa"
+                "uuid": "29344eb6-1057-458a-bd08-a47797c436bf"
             },
             "quantity": "30",
-            "uuid": "909e2d28-5551-4773-8c86-c6c476cb692b"
+            "uuid": "f4a7bea5-9676-4d90-ae78-52aa680aa446"
         }
     ],
     "name": "Панкейки с черникой",
@@ -134,5 +134,5 @@
         "Повторяйте процесс, пока не израсходуете все тесто.",
         "Подавайте панкейки горячими, можно с медом или кленовым сиропом."
     ],
-    "uuid": "4b5f322f-b2d3-4c26-8ef6-d7d4153265c9"
+    "uuid": "6663ba10-76c8-47d7-a374-49a0077004e5"
 }
