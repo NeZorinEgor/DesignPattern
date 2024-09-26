@@ -19,7 +19,10 @@ class Nomenclature(BaseModel):
         return self.name == other.name
 
     def __hash__(self):
-        return hash(self.name)  # Хэшируем по имени
+        """
+        Хэшируем по имени, группе и единице измерения
+        """
+        return hash((self.name, self.group, self.range))
 
     @property
     def name(self):

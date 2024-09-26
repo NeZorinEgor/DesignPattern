@@ -8,21 +8,11 @@ class CSVReport(ABCReport):
         super().__init__()
 
     def create(self, data):
-        fields = list(
-            filter(lambda x: not x.startswith("_") and not callable(getattr(data.__class__, x)), dir(data))
-        )
-
-        # Создаем буфер для записи CSV
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(data.__class__, x)), dir(data)))
         output = StringIO()
         writer = csv.writer(output)
-
-        # Записываем заголовки
         writer.writerow(fields)
-
-        # Записываем данные
         writer.writerow([self._format_value(getattr(data, field)) for field in fields])
-
-        # Возвращаем результат в формате CSV
         return output.getvalue()
 
     def _format_value(self, value):

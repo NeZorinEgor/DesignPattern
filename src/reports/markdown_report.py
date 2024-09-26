@@ -6,19 +6,12 @@ class MarkdownReport(ABCReport):
         super().__init__()
 
     def create(self, data):
-        fields = list(
-            filter(lambda x: not x.startswith("_") and not callable(getattr(data.__class__, x)), dir(data))
-        )
-
-        # Создаем заголовок для Markdown файла
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(data.__class__, x)), dir(data)))
         markdown = f"# {data.__class__.__name__} Report\n\n"
-
-        # Заполняем отчет данными
         for field in fields:
             value = self._to_serializable(getattr(data, field))
             markdown += f"## {field.capitalize()}\n"
             markdown += self._format_value(value) + "\n\n"
-
         return markdown
 
     def _format_value(self, value):
