@@ -29,7 +29,9 @@ class ABCReport(ABC):
         elif isinstance(val, list):
             return [self._to_serializable(v) for v in val]
         elif hasattr(val, '__dict__'):
-            return {key: self._to_serializable(value) for key, value in val.__dict__.items()}
+            # Используем фильтрацию через dir(), чтобы игнорировать приватные поля
+            fields = list(filter(lambda x: not x.startswith("_"), dir(val)))
+            return {field: self._to_serializable(getattr(val, field)) for field in fields if not callable(getattr(val, field))}
         elif hasattr(val, '__str__'):
             return str(val)
         else:
@@ -38,6 +40,4 @@ class ABCReport(ABC):
     @property
     def format(self):
         return self.__format
-
-
 
