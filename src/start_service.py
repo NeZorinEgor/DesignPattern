@@ -1,102 +1,120 @@
+from src.errors.proxy import ErrorProxy
 from src.errors.validator import Validator
-from src.settings_manager import SettingsManager
 from src.data_repository import DataRepository
 from src.models.group_nomenclature import GroupNomenclature
+from src.models.ingredient import Ingredient
 from src.models.nomenclature import Nomenclature
 from src.models.range import Range
 from src.models.recipe import Recipe
+from src.settings_manager import SettingsManager
 
 
 class StartService:
-    def __init__(self, repository: DataRepository, settings_manager: SettingsManager):
+    __repository: DataRepository
+    __nomenclatures: dict = {}
+    __error_proxy: ErrorProxy = ErrorProxy()
+
+    def __init__(self, repository):
         Validator.validate(repository, DataRepository)
-        Validator.validate(settings_manager, SettingsManager)
         self.__repository = repository
-        self.__settings_manager = settings_manager
 
-    @property
-    def settings(self):
-        return self.__settings_manager.settings
+    def __create_groups(self):
+        try:
+            items = [
+                GroupNomenclature.create(name="Бакалея"),
+                GroupNomenclature.create(name="Молочные продукты"),
+                GroupNomenclature.create(name="Яйца"),
+                GroupNomenclature.create(name="Приправы"),
+                GroupNomenclature.create(name="Ягода"),
+            ]
+            self.__repository.data[DataRepository.group_id()] = items
+        except Exception as e:
+            self.__error_proxy.error_message = str(e)  # Установка сообщения об ошибке
 
-    def create_nomenclature(self):
-        """
-        Фабричный метод для создания номенклатуры.
-        """
-        nomenclature = Nomenclature()
-        nomenclature.name = "Товар A"
-        self.__repository.data["nomenclature"] = nomenclature
-        print("Номенклатура успешно создана и сохранена в репозиторий.")
+    def __create_range(self):
+        try:
+            gram = Range.create(name="грамм", conversion_factor=1.0)
+            milliliter = Range.create(name="миллилитр", conversion_factor=1.0)
+            piece = Range.create(name="шт.", conversion_factor=1.0)
+            teaspoon = Range.create(name="чайная ложка", conversion_factor=1.0)
+            tablespoon = Range.create(name="столовая ложка", conversion_factor=1.0)
+            self.__repository.data[DataRepository.range_id()] = [gram, milliliter, piece, teaspoon, tablespoon]
+        except Exception as e:
+            self.__error_proxy.error_message = str(e)
 
-    def create_group(self):
-        """
-        Фабричный метод для создания группы.
-        """
-        group = GroupNomenclature.create_base_group()
-        self.__repository.data["group"] = group
-        print("Группа успешно создана и сохранена в репозиторий.")
+    def __create_nomenclature(self):
+        try:
+            gram = self.__repository.data[DataRepository.range_id()][0]
+            milliliter = self.__repository.data[DataRepository.range_id()][1]
+            piece = self.__repository.data[DataRepository.range_id()][2]
+            teaspoon = self.__repository.data[DataRepository.range_id()][3]
 
-    def create_units(self):
-        """
-        Фабричный метод для создания единиц измерения.
-        """
-        gram = Range(name="Грамм", conversion_factor=1.0)  # Грамм как базовая единица
-        kilogram = Range(name="Килограмм", conversion_factor=1000.0, base_unit=gram)  # Килограмм как производная
-        self.__repository.data["ranges"] = {"gram": gram, "kilogram": kilogram}
-        print("Единицы измерения успешно созданы и сохранены в репозиторий.")
+            group_grocery = [i for i in self.__repository.data[DataRepository.group_id()] if i.name == "Бакалея"][0]
+            group_dairy = [i for i in self.__repository.data[DataRepository.group_id()] if i.name == "Молочные продукты"][0]
+            group_eggs = [i for i in self.__repository.data[DataRepository.group_id()] if i.name == "Яйца"][0]
+            group_berries = [i for i in self.__repository.data[DataRepository.group_id()] if i.name == "Ягода"][0]
 
-    def create_recipes(self):
-        """
-        Фабричный метод для создания рецептов.
-        """
-        pancake_recipe = Recipe(
-            name="Панкейки с черникой",
-            ingredients={
-                "Пшеничная мука": "200 гр",
-                "Молоко": "300 мл",
-                "Яйца": "2 шт",
-                "Сахар": "50 гр",
-                "Разрыхлитель теста": "10 гр",
-                "Соль": "1/2 ч.л.",
-                "Черника": "150 гр",
-                "Сливочное масло": "30 гр"
-            },
-            instructions="""
-                1. Подготовьте все ингредиенты. В глубокой миске смешайте муку, сахар, разрыхлитель и соль.
-                2. В отдельной миске взбейте яйца и добавьте молоко. Хорошо перемешайте.
-                3. Влейте яичную смесь в сухие ингредиенты и перемешайте до однородности.
-                4. В растопленное сливочное масло добавьте тесто и аккуратно перемешайте.
-                5. Добавьте чернику в тесто и осторожно перемешайте.
-                6. Разогрейте сковороду и готовьте панкейки до золотистого цвета.
-            """
-        )
+            self.__nomenclatures["Пшеничная мука"] = Nomenclature.create(name="Пшеничная мука", group=group_grocery, range=gram)
+            self.__nomenclatures["Молоко"] = Nomenclature.create(name="Молоко", group=group_dairy, range=milliliter)
+            self.__nomenclatures["Яйцо"] = Nomenclature.create(name="Яйцо", group=group_eggs, range=piece)
+            self.__nomenclatures["Сахар"] = Nomenclature.create(name="Сахар", group=group_grocery, range=gram)
+            self.__nomenclatures["Разрыхлитель теста"] = Nomenclature.create(name="Разрыхлитель теста", group=group_grocery, range=gram)
+            self.__nomenclatures["Соль"] = Nomenclature.create(name="Соль", group=group_grocery, range=teaspoon)
+            self.__nomenclatures["Черника"] = Nomenclature.create(name="Черника", group=group_berries, range=gram)
+            self.__nomenclatures["Сливочное масло"] = Nomenclature.create(name="Сливочное масло", group=group_dairy, range=gram)
 
-        salad_recipe = Recipe(
-            name="Греческий салат",
-            ingredients={
-                "Огурцы": "2 шт",
-                "Помидоры": "3 шт",
-                "Оливки": "50 гр",
-                "Фета": "100 гр",
-                "Оливковое масло": "2 ст.л.",
-                "Соль": "по вкусу",
-                "Перец": "по вкусу"
-            },
-            instructions="""
-                1. Нарежьте огурцы и помидоры крупными кубиками.
-                2. Добавьте оливки и фету.
-                3. Полейте оливковым маслом, посолите и поперчите по вкусу.
-                4. Перемешайте и подавайте.
-            """
-        )
+            self.__repository.data[DataRepository.nomenclature_id()] = list(self.__nomenclatures.values())
+        except Exception as e:
+            self.__error_proxy.error_message = str(e)
 
-        self.__repository.data["recipes"] = [pancake_recipe, salad_recipe]
-        print("Рецепты успешно созданы и сохранены в репозиторий.")
+    def __create_recipe(self):
+        try:
+            ingredients = [
+                Ingredient(nomenclature=self.__nomenclatures["Пшеничная мука"], quantity=200),  # 200 гр
+                Ingredient(nomenclature=self.__nomenclatures["Молоко"], quantity=300),  # 300 мл
+                Ingredient(nomenclature=self.__nomenclatures["Яйцо"], quantity=2),  # 2 шт
+                Ingredient(nomenclature=self.__nomenclatures["Сахар"], quantity=50),  # 50 гр
+                Ingredient(nomenclature=self.__nomenclatures["Разрыхлитель теста"], quantity=10),  # 10 гр
+                Ingredient(nomenclature=self.__nomenclatures["Соль"], quantity=0.5),  # 1/2 ч.л. (0.5 ч.л.)
+                Ingredient(nomenclature=self.__nomenclatures["Черника"], quantity=150),  # 150 гр
+                Ingredient(nomenclature=self.__nomenclatures["Сливочное масло"], quantity=30)  # 30 гр
+            ]
+
+            steps = [
+                "Подготовьте все ингредиенты. В глубокой миске смешайте муку, сахар, разрыхлитель и соль.",
+                "В отдельной миске взбейте яйца и добавьте молоко. Хорошо перемешайте.",
+                "Влейте яичную смесь в сухие ингредиенты и перемешайте до однородности. Постарайтесь не перебить тесто, небольшие комочки допустимы.",
+                "В растопленное сливочное масло добавьте тесто и аккуратно перемешайте.",
+                "Добавьте чернику в тесто и осторожно перемешайте, чтобы не повредить ягоды.",
+                "Разогрейте сковороду на среднем огне и слегка смажьте ее маслом.",
+                "Вылейте половник теста на сковороду. Готовьте до появления пузырьков на поверхности, затем переверните и жарьте до золотистого цвета.",
+                "Повторяйте процесс, пока не израсходуете все тесто.",
+                "Подавайте панкейки горячими, можно с медом или кленовым сиропом."
+            ]
+
+            cooking_time = 25  # Время приготовления в минутах
+
+            recipe = Recipe.create(
+                name="Панкейки с черникой",
+                ingredients=ingredients,  # Используем список ингредиентов
+                steps=steps,
+                cooking_time_by_min=cooking_time
+            )
+
+            self.__repository.data[DataRepository.recipe_id()] = [recipe]
+        except Exception as e:
+            self.__error_proxy.error_message = str(e)
 
     def create(self):
-        """
-        Основной метод для создания данных: номенклатур, групп, единиц измерения и рецептов.
-        """
-        self.create_nomenclature()
-        self.create_group()
-        self.create_units()
-        self.create_recipes()
+        self.__create_groups()
+        self.__create_range()
+        self.__create_nomenclature()
+        self.__create_recipe()
+
+    @property
+    def error_message(self) -> str:
+        return self.__error_proxy.error_message
+
+    @property
+    def has_error(self) -> bool:
+        return not self.__error_proxy.is_empty

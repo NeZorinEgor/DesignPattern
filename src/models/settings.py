@@ -1,20 +1,54 @@
+from src.core.report import FormatEnum
 from src.errors.custom import InvalidTypeError, InvalidLengthError
+from src.errors.validator import Validator
+from src.reports.csv_report import CSVReport
+from src.reports.json_report import JSONReport
+from src.reports.markdown_report import MarkdownReport
+from src.reports.rtf_report import RTFReport
+from src.reports.xml_report import XMLReport
 
 
 class Settings:
     """Модель настроек с кастомными ошибками."""
-    __inn: str = ""
-    __account: str = ""
-    __correspondent_account: str = ""
-    __bic: str = ""
-    __name: str = ""
-    __type_of_ownership: str = ""
+    __inn: str = "Default value"
+    __account: str = "Default value"
+    __correspondent_account: str = "Default value"
+    __bic: str = "Default value"
+    __name: str = "Default value"
+    __type_of_ownership: str = "Default value"
+    __report_format: FormatEnum = FormatEnum.CSV
+    __report_classes = {
+        FormatEnum.CSV: CSVReport,
+        FormatEnum.MARKDOWN: MarkdownReport,
+        FormatEnum.JSON: JSONReport,
+        FormatEnum.XML: XMLReport,
+        FormatEnum.RTF: RTFReport,
+    }
+
+    @property
+    def report_classes(self):
+        return self.__report_classes
+
+    @report_classes.setter
+    def report_classes(self, class_mapping: dict) -> None:
+        if not isinstance(class_mapping, dict):
+            raise InvalidTypeError("report_classes must be a dictionary")
+        self.__report_classes = class_mapping
 
     def __str__(self):
         return (f"INN: {self.__inn} \nACCOUNT: {self.__account} \n"
                 f"CORRESPONDENT_ACCOUNT: {self.__correspondent_account} \n"
                 f"BIC: {self.__bic} \nNAME: {self.__name} \n"
                 f"TYPE_OF_OWNERSHIP: {self.__type_of_ownership}")
+
+    @property
+    def report_format(self) -> FormatEnum:
+        return self.__report_format
+
+    @report_format.setter
+    def report_format(self, new_format) -> None:
+        Validator.validate(new_format, FormatEnum)
+        self.__report_format = new_format
 
     @property
     def inn(self) -> str:
@@ -49,7 +83,8 @@ class Settings:
         if not isinstance(new_correspondent_account, str):
             raise InvalidTypeError("CORRESPONDENT_ACCOUNT must be a string")
         if len(new_correspondent_account) != 11:
-            raise InvalidLengthError(f"CORRESPONDENT_ACCOUNT must be exactly 11 characters long, not {len(new_correspondent_account)}")
+            raise InvalidLengthError(
+                f"CORRESPONDENT_ACCOUNT must be exactly 11 characters long, not {len(new_correspondent_account)}")
         self.__correspondent_account = new_correspondent_account
 
     @property
@@ -83,5 +118,6 @@ class Settings:
         if not isinstance(new_type_of_ownership, str):
             raise InvalidTypeError("TYPE_OF_OWNERSHIP must be a string")
         if len(new_type_of_ownership) != 5:
-            raise InvalidLengthError(f"TYPE_OF_OWNERSHIP must be exactly 5 characters long, not {len(new_type_of_ownership)}")
+            raise InvalidLengthError(
+                f"TYPE_OF_OWNERSHIP must be exactly 5 characters long, not {len(new_type_of_ownership)}")
         self.__type_of_ownership = new_type_of_ownership

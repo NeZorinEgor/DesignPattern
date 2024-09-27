@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Recipe>
+    <cooking_time_by_min>25</cooking_time_by_min>
+    <ingredients>
+        <item0>
+            <nomenclature>
+                <group>
+                    <name>Бакалея</name>
+                    <uuid>dae0ec77-2cc9-4814-8d4e-f0d097aa3050</uuid>
+                </group>
+                <name>Пшеничная мука</name>
+                <range>
+                    <name>грамм</name>
+                </range>
+                <uuid>3f6143a0-b4ce-4892-b901-3b4a3ceeb008</uuid>
+            </nomenclature>
+            <quantity>200</quantity>
+            <uuid>45c82cdd-2e32-4c48-bf94-c78825b2fe3e</uuid>
+        </item0>
+        <item1>
+            <nomenclature>
+                <group>
+                    <name>Молочные продукты</name>
+                    <uuid>ed2f25da-5baa-4d23-ae74-4bcac9cb3b0e</uuid>
+                </group>
+                <name>Молоко</name>
+                <range>
+                    <name>миллилитр</name>
+                </range>
+                <uuid>cc4fd722-2e1a-455f-8aec-aa78946cbc74</uuid>
+            </nomenclature>
+            <quantity>300</quantity>
+            <uuid>35e2a997-4df0-4cfb-b06e-bae037f4c816</uuid>
+        </item1>
+        <item2>
+            <nomenclature>
+                <group>
+                    <name>Яйца</name>
+                    <uuid>b5bfe401-22b3-4fc0-b688-7c676869742b</uuid>
+                </group>
+                <name>Яйцо</name>
+                <range>
+                    <name>шт.</name>
+                </range>
+                <uuid>931046a4-0143-4343-862f-3ceb6ca9a1c9</uuid>
+            </nomenclature>
+            <quantity>2</quantity>
+            <uuid>f16adfa3-1ac7-488b-a263-6dab6cae1d6e</uuid>
+        </item2>
+        <item3>
+            <nomenclature>
+                <group>
+                    <name>Бакалея</name>
+                    <uuid>dae0ec77-2cc9-4814-8d4e-f0d097aa3050</uuid>
+                </group>
+                <name>Сахар</name>
+                <range>
+                    <name>грамм</name>
+                </range>
+                <uuid>80dfc9ba-f8b4-48c8-84a2-6953d57d8273</uuid>
+            </nomenclature>
+            <quantity>50</quantity>
+            <uuid>1fa1d1e9-39a7-4d10-a2db-bca2132a9954</uuid>
+        </item3>
+        <item4>
+            <nomenclature>
+                <group>
+                    <name>Бакалея</name>
+                    <uuid>dae0ec77-2cc9-4814-8d4e-f0d097aa3050</uuid>
+                </group>
+                <name>Разрыхлитель теста</name>
+                <range>
+                    <name>грамм</name>
+                </range>
+                <uuid>f86513ac-0a8e-4417-bf77-2b215f5fb869</uuid>
+            </nomenclature>
+            <quantity>10</quantity>
+            <uuid>19fc93f6-d966-47f3-9280-4bd67d1d0884</uuid>
+        </item4>
+        <item5>
+            <nomenclature>
+                <group>
+                    <name>Бакалея</name>
+                    <uuid>dae0ec77-2cc9-4814-8d4e-f0d097aa3050</uuid>
+                </group>
+                <name>Соль</name>
+                <range>
+                    <name>чайная ложка</name>
+                </range>
+                <uuid>3b8919f1-7cb0-4990-bbdd-206d2750c322</uuid>
+            </nomenclature>
+            <quantity>0.5</quantity>
+            <uuid>881fedd8-a3c0-44e5-83e8-2fb4f8f36600</uuid>
+        </item5>
+        <item6>
+            <nomenclature>
+                <group>
+                    <name>Ягода</name>
+                    <uuid>904ac673-7544-41a6-a4af-6bf0e75853c0</uuid>
+                </group>
+                <name>Черника</name>
+                <range>
+                    <name>грамм</name>
+                </range>
+                <uuid>b18d2cf5-ee29-455f-bb0e-f8bba70d70f0</uuid>
+            </nomenclature>
+            <quantity>150</quantity>
+            <uuid>11b91a94-96e7-4d50-b28d-f3d5b1e7dd24</uuid>
+        </item6>
+        <item7>
+            <nomenclature>
+                <group>
+                    <name>Молочные продукты</name>
+                    <uuid>ed2f25da-5baa-4d23-ae74-4bcac9cb3b0e</uuid>
+                </group>
+                <name>Сливочное масло</name>
+                <range>
+                    <name>грамм</name>
+                </range>
+                <uuid>a76a9d6e-bb93-4e60-ae15-90828fc27d87</uuid>
+            </nomenclature>
+            <quantity>30</quantity>
+            <uuid>0bf919e6-aeb6-4436-ad4d-69070d7e167a</uuid>
+        </item7>
+    </ingredients>
+    <name>Панкейки с черникой</name>
+    <steps>
+        <item0>Подготовьте все ингредиенты. В глубокой миске смешайте муку, сахар, разрыхлитель и соль.</item0>
+        <item1>В отдельной миске взбейте яйца и добавьте молоко. Хорошо перемешайте.</item1>
+        <item2>Влейте яичную смесь в сухие ингредиенты и перемешайте до однородности. Постарайтесь не перебить тесто, небольшие комочки допустимы.</item2>
+        <item3>В растопленное сливочное масло добавьте тесто и аккуратно перемешайте.</item3>
+        <item4>Добавьте чернику в тесто и осторожно перемешайте, чтобы не повредить ягоды.</item4>
+        <item5>Разогрейте сковороду на среднем огне и слегка смажьте ее маслом.</item5>
+        <item6>Вылейте половник теста на сковороду. Готовьте до появления пузырьков на поверхности, затем переверните и жарьте до золотистого цвета.</item6>
+        <item7>Повторяйте процесс, пока не израсходуете все тесто.</item7>
+        <item8>Подавайте панкейки горячими, можно с медом или кленовым сиропом.</item8>
+    </steps>
+    <uuid>8571cfce-efa0-404e-b744-9e7a0d40ebf6</uuid>
+</Recipe>

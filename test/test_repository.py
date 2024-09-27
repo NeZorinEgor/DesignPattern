@@ -1,56 +1,48 @@
 import pytest
 from src.data_repository import DataRepository
+from src.models.group_nomenclature import GroupNomenclature
 from src.models.nomenclature import Nomenclature
 from src.models.range import Range
-from src.models.group_nomenclature import GroupNomenclature
 from src.models.recipe import Recipe
+from src.start_service import StartService
 
 
 @pytest.fixture
-def repository():
-    return DataRepository()
+def setup_repository():
+    """Фикстура для настройки репозитория и данных"""
+    repository = DataRepository()
+    service = StartService(repository)
+    service.create()  # Инициализация данных
+    return repository
 
 
-def test_nomenclature(repository):
-    nomenclature = Nomenclature()
-    nomenclature.name = "Товар A"
-    repository.data["nomenclature"] = nomenclature
-
-    assert "nomenclature" in repository.data
-    assert repository.data["nomenclature"].name == "Товар A"
-
-
-def test_ranges(repository):
-    gram = Range(name="Грамм", conversion_factor=1.0)
-    kilogram = Range(name="Килограмм", conversion_factor=1000.0, base_unit=gram)
-    repository.data["ranges"] = {"gram": gram, "kilogram": kilogram}
-
-    assert "ranges" in repository.data
-    assert "gram" in repository.data["ranges"]
-    assert "kilogram" in repository.data["ranges"]
-    assert repository.data["ranges"]["kilogram"].conversion_factor == 1000.0
+def test_nomenclatures(setup_repository):
+    """Проверка наличия номенклатур"""
+    repository = setup_repository
+    nomenclatures = repository.data[DataRepository.nomenclature_id()]
+    assert len(nomenclatures) > 0  # Проверка, что есть хотя бы одна номенклатура
+    assert all(isinstance(nomenclature, Nomenclature) for nomenclature in nomenclatures)  # Все элементы должны быть номенклатурами
 
 
-def test_group_nomenclature(repository):
-    group = GroupNomenclature.create_base_group()
-    repository.data["group"] = group
+def test_ranges(setup_repository):
+    """Проверка наличия единиц измерения"""
+    repository = setup_repository
+    ranges = repository.data[DataRepository.range_id()]
+    assert len(ranges) > 0  # Проверка, что есть хотя бы одна единица измерения
+    assert all(isinstance(range_item, Range) for range_item in ranges)  # Все элементы должны быть единицами измерения
 
-    assert "group" in repository.data
-    assert isinstance(repository.data["group"], GroupNomenclature)
+
+def test_groups(setup_repository):
+    """Проверка наличия групп"""
+    repository = setup_repository
+    groups = repository.data[DataRepository.group_id()]
+    assert len(groups) > 0  # Проверка, что есть хотя бы одна группа
+    assert all(isinstance(group, GroupNomenclature) for group in groups)  # Все элементы должны быть группами
 
 
-def test_recipes(repository):
-    recipe = Recipe(
-        name="Панкейки с черникой",
-        ingredients={
-            "Пшеничная мука": "200 гр",
-            "Молоко": "300 мл",
-            "Яйца": "2 шт"
-        },
-        instructions="Смешайте все ингредиенты и готовьте."
-    )
-    repository.data["recipes"] = [recipe]
-
-    assert "recipes" in repository.data
-    assert len(repository.data["recipes"]) == 1
-    assert repository.data["recipes"][0].name == "Панкейки с черникой"
+def test_recipes(setup_repository):
+    """Проверка наличия рецептов"""
+    repository = setup_repository
+    recipes = repository.data[DataRepository.recipe_id()]
+    assert len(recipes) > 0  # Проверка, что есть хотя бы один рецепт
+    assert all(isinstance(recipe, Recipe) for recipe in recipes)  # Все элементы должны быть рецептами
