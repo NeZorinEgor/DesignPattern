@@ -1,11 +1,11 @@
-class InvalidTypeError(Exception):
+class InvalidType(Exception):
     """
     Исключение, вызываемое при неверном типе данных.
     """
     pass
 
 
-class InvalidLengthError(Exception):
+class InvalidLength(Exception):
     """
     Исключение, вызываемое при неверной длине данных.
     """

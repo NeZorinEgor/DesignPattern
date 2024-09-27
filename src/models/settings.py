@@ -1,5 +1,5 @@
 from src.core.report import FormatEnum
-from src.errors.custom import InvalidTypeError, InvalidLengthError
+from src.errors.custom import InvalidType, InvalidLength
 from src.errors.validator import Validator
 from src.reports.csv_report import CSVReport
 from src.reports.json_report import JSONReport
@@ -32,7 +32,7 @@ class Settings:
     @report_classes.setter
     def report_classes(self, class_mapping: dict) -> None:
         if not isinstance(class_mapping, dict):
-            raise InvalidTypeError("report_classes must be a dictionary")
+            raise InvalidType("report_classes must be a dictionary")
         self.__report_classes = class_mapping
 
     def __str__(self):
@@ -57,9 +57,9 @@ class Settings:
     @inn.setter
     def inn(self, new_inn) -> None:
         if not isinstance(new_inn, str):
-            raise InvalidTypeError("INN must be a string")
+            raise InvalidType("INN must be a string")
         if len(new_inn) != 12:
-            raise InvalidLengthError(f"INN must be exactly 12 characters long, not {len(new_inn)}")
+            raise InvalidLength(f"INN must be exactly 12 characters long, not {len(new_inn)}")
         self.__inn = new_inn
 
     @property
@@ -69,9 +69,9 @@ class Settings:
     @account.setter
     def account(self, new_account) -> None:
         if not isinstance(new_account, str):
-            raise InvalidTypeError("ACCOUNT must be a string")
+            raise InvalidType("ACCOUNT must be a string")
         if len(new_account) != 11:
-            raise InvalidLengthError(f"ACCOUNT must be exactly 11 characters long, not {len(new_account)}")
+            raise InvalidLength(f"ACCOUNT must be exactly 11 characters long, not {len(new_account)}")
         self.__account = new_account
 
     @property
@@ -81,9 +81,9 @@ class Settings:
     @correspondent_account.setter
     def correspondent_account(self, new_correspondent_account) -> None:
         if not isinstance(new_correspondent_account, str):
-            raise InvalidTypeError("CORRESPONDENT_ACCOUNT must be a string")
+            raise InvalidType("CORRESPONDENT_ACCOUNT must be a string")
         if len(new_correspondent_account) != 11:
-            raise InvalidLengthError(
+            raise InvalidLength(
                 f"CORRESPONDENT_ACCOUNT must be exactly 11 characters long, not {len(new_correspondent_account)}")
         self.__correspondent_account = new_correspondent_account
 
@@ -94,9 +94,9 @@ class Settings:
     @bic.setter
     def bic(self, new_bic) -> None:
         if not isinstance(new_bic, str):
-            raise InvalidTypeError("BIC must be a string")
+            raise InvalidType("BIC must be a string")
         if len(new_bic) != 9:
-            raise InvalidLengthError(f"BIC must be exactly 9 characters long, not {len(new_bic)}")
+            raise InvalidLength(f"BIC must be exactly 9 characters long, not {len(new_bic)}")
         self.__bic = new_bic
 
     @property
@@ -106,7 +106,7 @@ class Settings:
     @name.setter
     def name(self, new_name) -> None:
         if not isinstance(new_name, str):
-            raise InvalidTypeError("NAME must be a string")
+            raise InvalidType("NAME must be a string")
         self.__name = new_name
 
     @property
@@ -116,8 +116,8 @@ class Settings:
     @type_of_ownership.setter
     def type_of_ownership(self, new_type_of_ownership) -> None:
         if not isinstance(new_type_of_ownership, str):
-            raise InvalidTypeError("TYPE_OF_OWNERSHIP must be a string")
+            raise InvalidType("TYPE_OF_OWNERSHIP must be a string")
         if len(new_type_of_ownership) != 5:
-            raise InvalidLengthError(
+            raise InvalidLength(
                 f"TYPE_OF_OWNERSHIP must be exactly 5 characters long, not {len(new_type_of_ownership)}")
         self.__type_of_ownership = new_type_of_ownership

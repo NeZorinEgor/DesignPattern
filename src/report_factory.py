@@ -2,7 +2,7 @@ import os.path
 
 from src.core.report import FormatEnum
 from src.data_repository import DataRepository
-from src.errors.custom import InvalidTypeError
+from src.errors.custom import InvalidType
 from src.errors.proxy import ErrorProxy
 from src.errors.validator import Validator
 from src.models.settings import Settings
@@ -18,13 +18,13 @@ class ReportFactory:
 
     def create(self, report_format: FormatEnum):
         """
-        Возвращает класс, в завивисомти от входного аргумента
+        Возвращает класс, в зависимости от входного аргумента
         """
         Validator.validate(report_format, FormatEnum)
 
         report_class = self.report_classes.get(report_format)
         if report_class is None:
-            raise InvalidTypeError("Неподдерживаемый формат отчета")
+            raise InvalidType("Неподдерживаемый формат отчета")
 
         return report_class()
 
@@ -35,7 +35,7 @@ class ReportFactory:
         base_format = self.settings.report_format
         report_class = self.report_classes.get(base_format)
         if report_class is None:
-            raise InvalidTypeError("Неподдерживаемый формат отчета")
+            raise InvalidType("Неподдерживаемый формат отчета")
         return report_class()
 
 
@@ -50,6 +50,6 @@ service.create()
 recipe = repository.data[DataRepository.recipe_id()][0]
 # Фабрика отчетности
 factory = ReportFactory(settings_manager.settings)
-creator = factory.create_default()
+creator = factory.create(FormatEnum.JSON)
 # creator = factory.create(FormatEnum.JSON)
 print(creator.create(recipe))
