@@ -3,7 +3,7 @@ import os
 
 from src.core.report import FormatEnum
 from src.errors.proxy import ErrorProxy
-from src.errors.custom import InvalidTypeError, UnsupportableReportFormat
+from src.errors.custom import InvalidType, UnsupportableReportFormat
 from src.models.settings import Settings
 
 
@@ -37,7 +37,7 @@ class SettingsManager:
         """Загрузка настроек из JSON файла."""
         try:
             if not isinstance(path, str):
-                raise InvalidTypeError("File path should be a string")
+                raise InvalidType("File path should be a string")
             if not os.path.exists(path):
                 raise FileNotFoundError(f"File {path} does not exist")
 
@@ -59,7 +59,7 @@ class SettingsManager:
         """Установка полей класса Settings из dict'а."""
         try:
             if not isinstance(input_dict, dict):
-                raise InvalidTypeError("Var should be a dict")
+                raise InvalidType("Var should be a dict")
 
             for key, value in input_dict.items():
                 if hasattr(self.__settings, key):

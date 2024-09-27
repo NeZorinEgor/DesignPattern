@@ -6,7 +6,6 @@ from src.models.ingredient import Ingredient
 from src.models.nomenclature import Nomenclature
 from src.models.range import Range
 from src.models.recipe import Recipe
-from src.settings_manager import SettingsManager
 
 
 class StartService:

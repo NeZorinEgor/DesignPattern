@@ -1,4 +1,10 @@
-class Range:
+from src.core.model import BaseModel
+
+
+class Range(BaseModel):
+    def local_eq(self, other):
+        pass
+
     __name = None
     __conversion_factor = None
     __base_unit = None
