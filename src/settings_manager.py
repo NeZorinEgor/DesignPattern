@@ -13,12 +13,12 @@ class SettingsManager:
     file_name = "settings.json"
     __settings = Settings()
     __error_proxy = ErrorProxy()
+    __instance = None
 
-    def __new__(cls):
-        # Singleton pattern
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(SettingsManager, cls).__new__(cls)
-        return cls.instance
+    def __new__(cls, *args, **kwargs):
+        if cls.__instance is None:
+            cls.__instance = super(SettingsManager, cls).__new__(cls, *args, **kwargs)
+        return cls.__instance
 
     @property
     def settings(self) -> Settings:

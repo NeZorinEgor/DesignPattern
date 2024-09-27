@@ -1,6 +1,11 @@
 from src.core.report import FormatEnum
 from src.errors.custom import InvalidTypeError, InvalidLengthError
 from src.errors.validator import Validator
+from src.reports.csv_report import CSVReport
+from src.reports.json_report import JSONReport
+from src.reports.markdown_report import MarkdownReport
+from src.reports.rtf_report import RTFReport
+from src.reports.xml_report import XMLReport
 
 
 class Settings:
@@ -12,6 +17,23 @@ class Settings:
     __name: str = "Default value"
     __type_of_ownership: str = "Default value"
     __report_format: FormatEnum = FormatEnum.CSV
+    __report_classes = {
+        FormatEnum.CSV: CSVReport,
+        FormatEnum.MARKDOWN: MarkdownReport,
+        FormatEnum.JSON: JSONReport,
+        FormatEnum.XML: XMLReport,
+        FormatEnum.RTF: RTFReport,
+    }
+
+    @property
+    def report_classes(self):
+        return self.__report_classes
+
+    @report_classes.setter
+    def report_classes(self, class_mapping: dict) -> None:
+        if not isinstance(class_mapping, dict):
+            raise InvalidTypeError("report_classes must be a dictionary")
+        self.__report_classes = class_mapping
 
     def __str__(self):
         return (f"INN: {self.__inn} \nACCOUNT: {self.__account} \n"
