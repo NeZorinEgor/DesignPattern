@@ -5,12 +5,12 @@ from src.errors.validator import Validator
 
 class Settings:
     """Модель настроек с кастомными ошибками."""
-    __inn: str = ""
-    __account: str = ""
-    __correspondent_account: str = ""
-    __bic: str = ""
-    __name: str = ""
-    __type_of_ownership: str = ""
+    __inn: str = "Default value"
+    __account: str = "Default value"
+    __correspondent_account: str = "Default value"
+    __bic: str = "Default value"
+    __name: str = "Default value"
+    __type_of_ownership: str = "Default value"
     __report_format: FormatEnum = FormatEnum.CSV
 
     def __str__(self):
@@ -61,7 +61,8 @@ class Settings:
         if not isinstance(new_correspondent_account, str):
             raise InvalidTypeError("CORRESPONDENT_ACCOUNT must be a string")
         if len(new_correspondent_account) != 11:
-            raise InvalidLengthError(f"CORRESPONDENT_ACCOUNT must be exactly 11 characters long, not {len(new_correspondent_account)}")
+            raise InvalidLengthError(
+                f"CORRESPONDENT_ACCOUNT must be exactly 11 characters long, not {len(new_correspondent_account)}")
         self.__correspondent_account = new_correspondent_account
 
     @property
@@ -95,5 +96,6 @@ class Settings:
         if not isinstance(new_type_of_ownership, str):
             raise InvalidTypeError("TYPE_OF_OWNERSHIP must be a string")
         if len(new_type_of_ownership) != 5:
-            raise InvalidLengthError(f"TYPE_OF_OWNERSHIP must be exactly 5 characters long, not {len(new_type_of_ownership)}")
+            raise InvalidLengthError(
+                f"TYPE_OF_OWNERSHIP must be exactly 5 characters long, not {len(new_type_of_ownership)}")
         self.__type_of_ownership = new_type_of_ownership

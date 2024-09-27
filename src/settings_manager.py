@@ -1,8 +1,9 @@
 import json
 import os
 
+from src.core.report import FormatEnum
 from src.errors.proxy import ErrorProxy
-from src.errors.custom import InvalidTypeError
+from src.errors.custom import InvalidTypeError, UnsupportableReportFormat
 from src.models.settings import Settings
 
 
@@ -32,7 +33,8 @@ class SettingsManager:
         self.__error_proxy.error_message = str(ex)
         raise ex
 
-    def from_json(self, path: str = os.path.join(os.pardir, file_name)) -> None:
+    def from_json(self, path: str = os.path.join(os.pardir, 'settings.json')) -> None:
+        """Загрузка настроек из JSON файла."""
         try:
             if not isinstance(path, str):
                 raise InvalidTypeError("File path should be a string")
@@ -43,11 +45,15 @@ class SettingsManager:
                 file = json.load(f)
                 for key, value in file.items():
                     if hasattr(self.__settings, key):
-                        setattr(self.__settings, key, value)
+                        if key == "report_format":
+                            if value in FormatEnum._value2member_map_:
+                                setattr(self.__settings, key, FormatEnum(value))
+                            else:
+                                raise UnsupportableReportFormat(f"Invalid value for report_format: {value}")
+                        else:
+                            setattr(self.__settings, key, value)
         except Exception as ex:
             self.set_exception(ex)
-            if not self.__error_proxy.is_empty:
-                return
 
     def from_dict(self, input_dict: dict) -> None:
         """Установка полей класса Settings из dict'а."""
