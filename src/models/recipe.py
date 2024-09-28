@@ -1,6 +1,6 @@
 from typing import List
 from src.core.model import BaseModel
-from src.errors.validator import Validator
+from src.utils.validator import Validator
 from src.models.ingredient import Ingredient
 import datetime
 import uuid

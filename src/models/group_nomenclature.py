@@ -8,6 +8,10 @@ class GroupNomenclature(BaseModel):
     def name(self):
         return self.__name
 
+    @name.setter
+    def name(self, new_name):
+        self.__name = new_name
+
     def local_eq(self, other):
         return self.__name == other.__name
 
@@ -18,4 +22,4 @@ class GroupNomenclature(BaseModel):
         return item
 
     def __str__(self):
-        return f"{self.__name}"
+        return f"{self.__name}, uuid: {self.uuid}"

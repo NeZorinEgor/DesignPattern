@@ -7,18 +7,35 @@ class Range(BaseModel):
     __base_unit = None
 
     def local_eq(self, other):
-        return self.__base_unit == other.__base_unit and self.__name == other.__name
+        if isinstance(other, Range):
+            print(self.__name, other.__name)
+            print(self.__conversion_factor, other.__conversion_factor)
+            return self.__name == other.__name and self.__conversion_factor == other.__conversion_factor
+        return False
 
     @property
     def name(self):
         return self.__name
 
+    @name.setter
+    def name(self, new_name):
+        self.__name = new_name
+
     @property
     def base_unit(self):
         return self.__base_unit
 
+    @base_unit.setter
+    def base_unit(self, new_unit):
+        self.__base_unit = new_unit
+
+    @property
     def conversion_factor(self):
         return self.__conversion_factor
+
+    @conversion_factor.setter
+    def conversion_factor(self, new_factor):
+        self.__conversion_factor = new_factor
 
     def convert_to_base(self, value):
         return value * self.__conversion_factor
@@ -27,7 +44,7 @@ class Range(BaseModel):
         return value / self.__conversion_factor
 
     def __str__(self):
-        return f"{self.__name}"
+        return f"uuid: {self.uuid}, name: {self.__name}, base: {self.__base_unit}"
 
     @staticmethod
     def create(name, conversion_factor, base_unit=None):
@@ -39,7 +56,6 @@ class Range(BaseModel):
             base.__name = None
             base.__conversion_factor = None
             base.__base_unit = None
-            item.__base_unit = base
         else:
-            item.__base_unit = base
+            item.__base_unit = base_unit
         return item

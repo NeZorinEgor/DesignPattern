@@ -10,6 +10,10 @@ class BaseModel(ABC):
     def uuid(self):
         return self.__uuid
 
+    @uuid.setter
+    def uuid(self, new_uuid):
+        self.__uuid = new_uuid
+
     @abstractmethod
     def local_eq(self, other):
         pass

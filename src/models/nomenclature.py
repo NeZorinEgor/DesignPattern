@@ -1,5 +1,5 @@
 from src.core.model import BaseModel
-from src.errors.validator import Validator
+from src.utils.validator import Validator
 from src.models.group_nomenclature import GroupNomenclature
 from src.models.range import Range
 
