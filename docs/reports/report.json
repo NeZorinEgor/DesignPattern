@@ -1,125 +1,173 @@
 {
-    "cooking_time_by_min": "25",
+    "cooking_time_by_min": 25,
     "ingredients": [
         {
             "nomenclature": {
                 "group": {
                     "name": "Бакалея",
-                    "uuid": "edcf2f68-987d-4645-865f-529df232fc63"
+                    "uuid": "75d33fd5-1e71-4bda-a085-0700899db12d"
                 },
                 "name": "Пшеничная мука",
                 "range": {
-                    "name": "грамм"
+                    "base_unit": {
+                        "base_unit": null,
+                        "name": null,
+                        "uuid": "fe15dbb6-4c01-42aa-a626-5a728669c100"
+                    },
+                    "name": "грамм",
+                    "uuid": "ffc14277-5289-433c-a0a9-c357a2ec3881"
                 },
-                "uuid": "a7d570fb-0573-48a2-adb1-9be9a0adac53"
+                "uuid": "a6203400-7d80-4575-9db9-6cc2e0bf2a1c"
             },
-            "quantity": "200",
-            "uuid": "d8dce960-cb44-4b64-be0f-2af76c325c77"
+            "quantity": 200,
+            "uuid": "b31ece17-910b-441d-b6e8-439c2a383c7a"
         },
         {
             "nomenclature": {
                 "group": {
                     "name": "Молочные продукты",
-                    "uuid": "63267058-1df0-4a2e-bb73-153a92130fdb"
+                    "uuid": "67e4cd3e-5ccd-4db9-a2ad-bf521226f476"
                 },
                 "name": "Молоко",
                 "range": {
-                    "name": "миллилитр"
+                    "base_unit": {
+                        "base_unit": null,
+                        "name": null,
+                        "uuid": "cfc27b27-6df0-4955-9b23-733f2508eecd"
+                    },
+                    "name": "миллилитр",
+                    "uuid": "0fb2fcaa-a384-457a-b642-4a3e16d70b5c"
                 },
-                "uuid": "3b9062ae-6955-4364-baf1-ce9faa8f8970"
+                "uuid": "b50d29f1-9ebe-446b-963c-9c43c2c39807"
             },
-            "quantity": "300",
-            "uuid": "c3ecf10e-4407-4743-b514-e6e96dad3e74"
+            "quantity": 300,
+            "uuid": "d326b54c-304a-438a-888d-e7ffe0e497b7"
         },
         {
             "nomenclature": {
                 "group": {
                     "name": "Яйца",
-                    "uuid": "b23fc4c9-5453-47cb-9756-ebc880cf6837"
+                    "uuid": "74d76955-7def-48e0-b0d3-bdb9f21cea92"
                 },
                 "name": "Яйцо",
                 "range": {
-                    "name": "шт."
+                    "base_unit": {
+                        "base_unit": null,
+                        "name": null,
+                        "uuid": "22a19265-e7f9-4731-b911-21569126c783"
+                    },
+                    "name": "шт.",
+                    "uuid": "caedf4a0-e47f-4320-9cd9-aad9a3f2ae6f"
                 },
-                "uuid": "2f57ac29-4ed5-4f75-af5f-a207d9b8cd0a"
+                "uuid": "e040af84-3732-4daf-be75-ff246d76524b"
             },
-            "quantity": "2",
-            "uuid": "9f0b9478-e7cc-4e6f-b5a5-d7a5845d45d1"
+            "quantity": 2,
+            "uuid": "b3583cc2-adc3-4ee0-a3c5-fbb649439825"
         },
         {
             "nomenclature": {
                 "group": {
                     "name": "Бакалея",
-                    "uuid": "edcf2f68-987d-4645-865f-529df232fc63"
+                    "uuid": "75d33fd5-1e71-4bda-a085-0700899db12d"
                 },
                 "name": "Сахар",
                 "range": {
-                    "name": "грамм"
+                    "base_unit": {
+                        "base_unit": null,
+                        "name": null,
+                        "uuid": "fe15dbb6-4c01-42aa-a626-5a728669c100"
+                    },
+                    "name": "грамм",
+                    "uuid": "ffc14277-5289-433c-a0a9-c357a2ec3881"
                 },
-                "uuid": "97731710-0837-42cf-999b-db49b764c271"
+                "uuid": "41baf2e4-0a40-405f-943d-cb64ced520ad"
             },
-            "quantity": "50",
-            "uuid": "e9bce00f-84c7-4165-a216-7d312c6a6dd7"
+            "quantity": 50,
+            "uuid": "8d03d334-e607-4fd2-ae33-7868b8742165"
         },
         {
             "nomenclature": {
                 "group": {
                     "name": "Бакалея",
-                    "uuid": "edcf2f68-987d-4645-865f-529df232fc63"
+                    "uuid": "75d33fd5-1e71-4bda-a085-0700899db12d"
                 },
                 "name": "Разрыхлитель теста",
                 "range": {
-                    "name": "грамм"
+                    "base_unit": {
+                        "base_unit": null,
+                        "name": null,
+                        "uuid": "fe15dbb6-4c01-42aa-a626-5a728669c100"
+                    },
+                    "name": "грамм",
+                    "uuid": "ffc14277-5289-433c-a0a9-c357a2ec3881"
                 },
-                "uuid": "6b36f1ec-fa73-4fad-a635-4a50a7500f0d"
+                "uuid": "197669d2-b2a9-475f-974e-f06f619cb6b2"
             },
-            "quantity": "10",
-            "uuid": "5f0a3af3-9356-4681-8392-33181d343552"
+            "quantity": 10,
+            "uuid": "51669037-e1e2-4db8-a168-7d756637869a"
         },
         {
             "nomenclature": {
                 "group": {
                     "name": "Бакалея",
-                    "uuid": "edcf2f68-987d-4645-865f-529df232fc63"
+                    "uuid": "75d33fd5-1e71-4bda-a085-0700899db12d"
                 },
                 "name": "Соль",
                 "range": {
-                    "name": "чайная ложка"
+                    "base_unit": {
+                        "base_unit": null,
+                        "name": null,
+                        "uuid": "68887c5b-61b1-4972-9738-e776c0522861"
+                    },
+                    "name": "чайная ложка",
+                    "uuid": "8b7a882c-e332-4727-9e31-1fd67ca4263c"
                 },
-                "uuid": "325d96d7-f994-480b-8b0e-dc71b6dc0928"
+                "uuid": "d68e54c2-2953-4b79-b4b3-0c0c960df565"
             },
-            "quantity": "0.5",
-            "uuid": "a3db3c82-0269-4129-b983-d22648d72cf4"
+            "quantity": 0.5,
+            "uuid": "afa7506d-8e11-402e-a0ea-ffdd00297350"
         },
         {
             "nomenclature": {
                 "group": {
                     "name": "Ягода",
-                    "uuid": "41a004bb-6fb0-4e12-aba3-bfde47983678"
+                    "uuid": "d59e5b73-dcab-48e8-bfb3-33071a1ce743"
                 },
                 "name": "Черника",
                 "range": {
-                    "name": "грамм"
+                    "base_unit": {
+                        "base_unit": null,
+                        "name": null,
+                        "uuid": "fe15dbb6-4c01-42aa-a626-5a728669c100"
+                    },
+                    "name": "грамм",
+                    "uuid": "ffc14277-5289-433c-a0a9-c357a2ec3881"
                 },
-                "uuid": "0b79ad50-0c2a-4d7b-909d-70766874d4f6"
+                "uuid": "f6564848-5f3d-4a11-a987-f7b90d0ce244"
             },
-            "quantity": "150",
-            "uuid": "b8322298-6af3-4f5d-87fb-66178ad379c0"
+            "quantity": 150,
+            "uuid": "0a2a837a-2038-4150-8bb5-cba8a05ad862"
         },
         {
             "nomenclature": {
                 "group": {
                     "name": "Молочные продукты",
-                    "uuid": "63267058-1df0-4a2e-bb73-153a92130fdb"
+                    "uuid": "67e4cd3e-5ccd-4db9-a2ad-bf521226f476"
                 },
                 "name": "Сливочное масло",
                 "range": {
-                    "name": "грамм"
+                    "base_unit": {
+                        "base_unit": null,
+                        "name": null,
+                        "uuid": "fe15dbb6-4c01-42aa-a626-5a728669c100"
+                    },
+                    "name": "грамм",
+                    "uuid": "ffc14277-5289-433c-a0a9-c357a2ec3881"
                 },
-                "uuid": "29344eb6-1057-458a-bd08-a47797c436bf"
+                "uuid": "e10e47a5-9fd5-467a-85df-d6bed631c074"
             },
-            "quantity": "30",
-            "uuid": "f4a7bea5-9676-4d90-ae78-52aa680aa446"
+            "quantity": 30,
+            "uuid": "1fff3c00-a702-4414-912a-74bc311f62d3"
         }
     ],
     "name": "Панкейки с черникой",
@@ -134,5 +182,6 @@
         "Повторяйте процесс, пока не израсходуете все тесто.",
         "Подавайте панкейки горячими, можно с медом или кленовым сиропом."
     ],
-    "uuid": "6663ba10-76c8-47d7-a374-49a0077004e5"
+    "time": 1727493783.902986,
+    "uuid": "79b05017-85fc-4b5e-9d4a-b0401ee22674"
 }

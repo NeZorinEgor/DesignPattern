@@ -2,6 +2,8 @@ from typing import List
 from src.core.model import BaseModel
 from src.errors.validator import Validator
 from src.models.ingredient import Ingredient
+import datetime
+import uuid
 
 
 class Recipe(BaseModel):
@@ -9,6 +11,8 @@ class Recipe(BaseModel):
     __ingredients: List[Ingredient]   # Список объектов Ingredient
     __steps: List[str]
     __cooking_time_by_min: float | int
+    __time = None
+    __test_uuid = uuid.uuid4()
 
     @property
     def name(self):
@@ -46,6 +50,14 @@ class Recipe(BaseModel):
         Validator.validate(value, type_=int | float)
         self.__cooking_time_by_min = value
 
+    @property
+    def time(self):
+        return self.__time
+
+    @time.setter
+    def time(self, new_time):
+        self.__time = new_time
+
     @staticmethod
     def create(name: str, ingredients: List[Ingredient], steps: List[str], cooking_time_by_min: float | int):
         recipe = Recipe()
@@ -53,6 +65,7 @@ class Recipe(BaseModel):
         recipe.ingredients = ingredients
         recipe.steps = steps
         recipe.cooking_time_by_min = cooking_time_by_min
+        recipe.time = datetime.datetime.now(datetime.UTC)
         return recipe
 
     def local_eq(self, other):

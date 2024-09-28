@@ -11,12 +11,12 @@ def test_no_load_settings():
     settings_manager = SettingsManager()
 
     settings = settings_manager.settings
-    assert settings.inn == ""
-    assert settings.account == ""
-    assert settings.correspondent_account == ""
-    assert settings.bic == ""
-    assert settings.name == ""
-    assert settings.type_of_ownership == ""
+    assert settings.inn == 'Default value'
+    assert settings.account == 'Default value'
+    assert settings.correspondent_account == 'Default value'
+    assert settings.bic == 'Default value'
+    assert settings.name == 'Default value'
+    assert settings.type_of_ownership == 'Default value'
 
 
 # Тестовые данные

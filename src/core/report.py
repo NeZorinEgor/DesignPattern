@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from enum import Enum
+from datetime import datetime
 
 
 class FormatEnum(Enum):
@@ -28,13 +29,17 @@ class ABCReport(ABC):
             return {str(k): self._to_serializable(v) for k, v in val.items()}
         elif isinstance(val, list):
             return [self._to_serializable(v) for v in val]
+        elif isinstance(val, (int, float, bool)):  # Числовые и логические типы оставляем как есть
+            return val
+        elif isinstance(val, datetime):   # timestamp
+            return val.timestamp()
         elif hasattr(val, '__dict__'):
             fields = list(filter(lambda x: not x.startswith("_"), dir(val)))
-            return {field: self._to_serializable(getattr(val, field)) for field in fields if not callable(getattr(val, field))}
-        elif hasattr(val, '__str__'):
-            return str(val)
-        else:
-            return val
+            return {field: self._to_serializable(getattr(val, field)) for field in fields if
+                    not callable(getattr(val, field))}
+        elif val is None:  # null
+            return None
+        return str(val)
 
     @property
     def format(self):

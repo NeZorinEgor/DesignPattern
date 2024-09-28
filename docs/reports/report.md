@@ -5,61 +5,93 @@
 
 ## Ingredients
 - **nomenclature**: **group**: **name**: Бакалея
-**uuid**: 5f4e27ed-6038-43fc-b145-4f0ac2b7259a
+**uuid**: 72ece342-9242-47c3-8e73-86c2d7f4aa26
 **name**: Пшеничная мука
-**range**: **name**: грамм
-**uuid**: 5dd662ae-4c9b-4d3e-8ad0-e17079f7771c
+**range**: **base_unit**: **base_unit**: None
+**name**: None
+**uuid**: a20054c2-fc67-406a-978f-71311967f5f7
+**name**: грамм
+**uuid**: 246a65c8-0447-4d07-b664-5b56ad64a935
+**uuid**: 620f081f-b858-437d-83f8-a3025aee0527
 **quantity**: 200
-**uuid**: 6f19394d-f586-4ed5-a646-8de734c29adf
+**uuid**: 4f2873a2-609a-4a88-9a50-bec5576a291d
 - **nomenclature**: **group**: **name**: Молочные продукты
-**uuid**: 309d94a3-909f-41e5-9788-3826e7c2fc2e
+**uuid**: be7b616f-5715-47f3-b81b-cfd1cd61e289
 **name**: Молоко
-**range**: **name**: миллилитр
-**uuid**: 09a5649a-c62a-4c05-9f66-9aa78e17a1b0
+**range**: **base_unit**: **base_unit**: None
+**name**: None
+**uuid**: 28d7f1f4-0938-4de2-bbe1-f3329c7dbc79
+**name**: миллилитр
+**uuid**: 8522d1c0-6faf-4087-a535-c9e4eb812ea9
+**uuid**: 3322bf25-66fe-4633-8382-110464d1da49
 **quantity**: 300
-**uuid**: e0a02f72-a541-4f4e-9334-fe863763d263
+**uuid**: 4f7500b2-34e7-4bb6-90a1-15cf87e97841
 - **nomenclature**: **group**: **name**: Яйца
-**uuid**: 94d5b856-c956-4703-b754-83946fc558c9
+**uuid**: 297cd05c-135e-4c9e-b0bf-e49a6225672f
 **name**: Яйцо
-**range**: **name**: шт.
-**uuid**: 54d0d26e-5a48-4a30-96a2-e389dc8de17a
+**range**: **base_unit**: **base_unit**: None
+**name**: None
+**uuid**: e610846e-a13d-4db1-abc7-fad607780097
+**name**: шт.
+**uuid**: 7a06ee74-bb01-4774-a812-2c4c2cb17b95
+**uuid**: 9635cce5-b0f6-4663-afd7-7a451db90de1
 **quantity**: 2
-**uuid**: 507b94d4-d0f0-44cb-ba14-1754c1ac7a45
+**uuid**: c3544e99-6dac-42e5-bc9c-4cae34360a60
 - **nomenclature**: **group**: **name**: Бакалея
-**uuid**: 5f4e27ed-6038-43fc-b145-4f0ac2b7259a
+**uuid**: 72ece342-9242-47c3-8e73-86c2d7f4aa26
 **name**: Сахар
-**range**: **name**: грамм
-**uuid**: 4779a365-f292-4123-b874-2bf92e58123e
+**range**: **base_unit**: **base_unit**: None
+**name**: None
+**uuid**: a20054c2-fc67-406a-978f-71311967f5f7
+**name**: грамм
+**uuid**: 246a65c8-0447-4d07-b664-5b56ad64a935
+**uuid**: f0d0922d-7b37-4a0e-b470-3326ad363d74
 **quantity**: 50
-**uuid**: f2b63f3c-f4fb-4c30-a2b6-b35c09d89c0d
+**uuid**: 2cf003b7-d1d1-47f4-b55a-bc9c22ed87b5
 - **nomenclature**: **group**: **name**: Бакалея
-**uuid**: 5f4e27ed-6038-43fc-b145-4f0ac2b7259a
+**uuid**: 72ece342-9242-47c3-8e73-86c2d7f4aa26
 **name**: Разрыхлитель теста
-**range**: **name**: грамм
-**uuid**: ead664f5-0f6e-4fb5-8fc6-3fca9f61db08
+**range**: **base_unit**: **base_unit**: None
+**name**: None
+**uuid**: a20054c2-fc67-406a-978f-71311967f5f7
+**name**: грамм
+**uuid**: 246a65c8-0447-4d07-b664-5b56ad64a935
+**uuid**: f75ef2d7-9b1b-422c-81e6-9401b7259a1d
 **quantity**: 10
-**uuid**: ea5ca058-98ef-4b7f-b550-dfa65ec24109
+**uuid**: 45a59f6a-3d9c-4acb-ba0d-ebad2b7012ef
 - **nomenclature**: **group**: **name**: Бакалея
-**uuid**: 5f4e27ed-6038-43fc-b145-4f0ac2b7259a
+**uuid**: 72ece342-9242-47c3-8e73-86c2d7f4aa26
 **name**: Соль
-**range**: **name**: чайная ложка
-**uuid**: 758a4e32-f75d-47d4-8026-3111d1db821d
+**range**: **base_unit**: **base_unit**: None
+**name**: None
+**uuid**: 05506ef6-227f-433d-8657-6028abd8d6bc
+**name**: чайная ложка
+**uuid**: 2656f5a0-ae55-4e9e-b73b-7130a0d5f6a5
+**uuid**: 0b2d17bb-6062-4354-9cd4-f1a28480abc6
 **quantity**: 0.5
-**uuid**: aff0c9ea-0069-4540-b08f-af11213a8811
+**uuid**: 791a0d95-0ac3-4d8b-86ef-fe7bee8efabf
 - **nomenclature**: **group**: **name**: Ягода
-**uuid**: c7cbb360-dc9d-4a35-8dbb-cc80cfb0bf72
+**uuid**: 2e354ddb-2719-4426-8e21-92ad7aca71ae
 **name**: Черника
-**range**: **name**: грамм
-**uuid**: d7f7ead8-ed8e-43d2-9609-8e122f71f066
+**range**: **base_unit**: **base_unit**: None
+**name**: None
+**uuid**: a20054c2-fc67-406a-978f-71311967f5f7
+**name**: грамм
+**uuid**: 246a65c8-0447-4d07-b664-5b56ad64a935
+**uuid**: bee9d2ee-7fe5-40c4-8fad-883c018b5101
 **quantity**: 150
-**uuid**: 71be1cd5-7cbf-4966-8ec3-0fbffe8ffc64
+**uuid**: 3916c29c-a9a1-457d-8585-e9a21282b6a6
 - **nomenclature**: **group**: **name**: Молочные продукты
-**uuid**: 309d94a3-909f-41e5-9788-3826e7c2fc2e
+**uuid**: be7b616f-5715-47f3-b81b-cfd1cd61e289
 **name**: Сливочное масло
-**range**: **name**: грамм
-**uuid**: df491d8e-77e6-4a95-aafc-a14b8eb6d832
+**range**: **base_unit**: **base_unit**: None
+**name**: None
+**uuid**: a20054c2-fc67-406a-978f-71311967f5f7
+**name**: грамм
+**uuid**: 246a65c8-0447-4d07-b664-5b56ad64a935
+**uuid**: 07a6c668-105f-43cc-8d74-ef8d13c0f453
 **quantity**: 30
-**uuid**: 1c86a5cd-9e36-49e0-91cf-c1dea46785e9
+**uuid**: 44c49859-5db7-46cc-9ffe-4ae6e982d29f
 
 ## Name
 Панкейки с черникой
@@ -75,5 +107,8 @@
 - Повторяйте процесс, пока не израсходуете все тесто.
 - Подавайте панкейки горячими, можно с медом или кленовым сиропом.
 
+## Time
+1727493938.688966
+
 ## Uuid
-fb9df3e6-47f2-47e6-9c42-b531dcf6cde4
+c38e3ae0-2f39-4099-8f91-865451ea183e
