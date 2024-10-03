@@ -13,6 +13,9 @@ class Deserializer:
         instance = cls()  # Создаем новый экземпляр класса
 
         for key, value in json.items():
+            if key == "uuid":
+                continue
+
             # Если это примитив и он есть у класса
             if hasattr(instance, key) and Deserializer._is_primitive(value):
                 setattr(instance, key, value)
@@ -26,24 +29,3 @@ class Deserializer:
                     setattr(instance, key, sub_instance)
 
         return instance
-
-
-# Пример использования
-range = Range.create(name="кг.", conversion_factor=1000,
-                     base_unit=Range.create(name="гр.", conversion_factor=1, base_unit=None))
-range_dict = {
-    "uuid": "65256fbf-ca34-4636-95f2-87615dc98648",
-    "name": "кг.",
-    "conversion_factor": 1000,
-    "base_unit": {
-        "uuid": "65256fbf-ca34-4636-95f2-87615dc98648",
-        "name": "гр.",
-        "conversion_factor": 1,
-        "base_unit": None
-    }
-}
-
-deserialized_range = Deserializer.deserialize(Range, range_dict)
-print(deserialized_range)
-print(range)
-print(range == deserialized_range)
