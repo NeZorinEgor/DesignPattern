@@ -1,4 +1,5 @@
 from src.core.model import BaseModel
+from src.utils.validator import Validator
 
 
 class GroupNomenclature(BaseModel):
@@ -9,7 +10,8 @@ class GroupNomenclature(BaseModel):
         return self.__name
 
     @name.setter
-    def name(self, new_name):
+    def name(self, new_name: str):
+        Validator.validate(new_name, type_=str)
         self.__name = new_name
 
     def local_eq(self, other):

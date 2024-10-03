@@ -1,5 +1,4 @@
 from src.utils.validator import Validator
-from src.models.range import Range
 
 
 class Deserializer:

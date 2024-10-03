@@ -1,4 +1,5 @@
 from src.core.model import BaseModel
+from src.utils.validator import Validator
 
 
 class Range(BaseModel):
@@ -7,8 +8,9 @@ class Range(BaseModel):
     __base_unit = None
 
     def local_eq(self, other):
+        # Сравниваем по имени или по коду, если он есть
         if isinstance(other, Range):
-            return self.__name == other.__name and self.__conversion_factor == other.__conversion_factor and self.base_unit == other.base_unit
+            return self.__name == other.__name or self.__code == other.__code
         return False
 
     @property
@@ -17,6 +19,7 @@ class Range(BaseModel):
 
     @name.setter
     def name(self, new_name):
+        Validator.validate(new_name, type_=str)
         self.__name = new_name
 
     @property
@@ -25,6 +28,7 @@ class Range(BaseModel):
 
     @base_unit.setter
     def base_unit(self, new_unit):
+        Validator.validate(new_unit, type_=Range | None)
         self.__base_unit = new_unit
 
     @property
@@ -33,6 +37,7 @@ class Range(BaseModel):
 
     @conversion_factor.setter
     def conversion_factor(self, new_factor):
+        Validator.validate(new_factor, type_=int)
         self.__conversion_factor = new_factor
 
     def convert_to_base(self, value):
