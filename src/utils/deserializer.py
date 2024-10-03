@@ -4,35 +4,33 @@ from src.models.range import Range
 
 class Deserializer:
     @staticmethod
+    def _is_primitive(value):
+        return isinstance(value, (int, float, bool, str, bytes, type(None)))
+
+    @staticmethod
     def deserialize(cls, json: dict):
-        Validator.validate(cls, type_=type)
-        instance = cls()
+        Validator.validate(cls, type_=type)  # Убедимся, что передан класс
+        instance = cls()  # Создаем новый экземпляр класса
 
         for key, value in json.items():
-            key = key.lower()
-            if hasattr(instance, key):
-                attr = getattr(instance, key)
-                if isinstance(attr, list):
-                    deserialized_values = [Deserializer.deserialize(attr[0].__class__, item) for item in value]
-                    setattr(instance, key, deserialized_values)
-                elif isinstance(attr, Range):  # Проверка, если атрибут - объект класса Range
-                    deserialized_value = Deserializer.deserialize(attr.__class__, value)
-                    setattr(instance, key, deserialized_value)
-                else:
-                    setattr(instance, key, value)
+            # Если это примитив и он есть у класса
+            if hasattr(instance, key) and Deserializer._is_primitive(value):
+                setattr(instance, key, value)
+            # Если это кастомная модель и она есть в классе
+            elif hasattr(instance, key) and isinstance(value, dict):
+                dict_fields = value.keys()
+                model_fields = filter(lambda x: not x.startswith("_") and not callable(getattr(cls, x)), dir(cls))
+                if set(dict_fields) == set(model_fields):
+                    # Рекурсивно десериализуем значение в новый экземпляр класса
+                    sub_instance = Deserializer.deserialize(cls, value)
+                    setattr(instance, key, sub_instance)
 
-                # Если это base_unit, создаем экземпляр Range
-                if key == 'base_unit' and isinstance(value, dict):
-                    base_unit_instance = Range.create(
-                        name=value['name'],
-                        conversion_factor=value['conversion_factor'],
-                        base_unit=None  # Здесь можно передать deserialized для base_unit, если он есть
-                    )
-                    setattr(instance, key, base_unit_instance)
         return instance
 
 
-range = Range.create(name="кг.", conversion_factor=1000, base_unit=Range.create(name="гр.", conversion_factor=1, base_unit=None))
+# Пример использования
+range = Range.create(name="кг.", conversion_factor=1000,
+                     base_unit=Range.create(name="гр.", conversion_factor=1, base_unit=None))
 range_dict = {
     "uuid": "65256fbf-ca34-4636-95f2-87615dc98648",
     "name": "кг.",
@@ -46,8 +44,6 @@ range_dict = {
 }
 
 deserialized_range = Deserializer.deserialize(Range, range_dict)
-
 print(deserialized_range)
 print(range)
-print(deserialized_range == range)  # Теперь должно вернуть True
-
+print(range == deserialized_range)

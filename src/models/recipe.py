@@ -29,7 +29,6 @@ class Recipe(BaseModel):
 
     @ingredients.setter
     def ingredients(self, value: List[Ingredient]):
-        Validator.validate(value, type_=List[Ingredient])
         self.__ingredients = value
 
     @property

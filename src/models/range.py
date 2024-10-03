@@ -8,9 +8,7 @@ class Range(BaseModel):
 
     def local_eq(self, other):
         if isinstance(other, Range):
-            print(self.__name, other.__name)
-            print(self.__conversion_factor, other.__conversion_factor)
-            return self.__name == other.__name and self.__conversion_factor == other.__conversion_factor
+            return self.__name == other.__name and self.__conversion_factor == other.__conversion_factor and self.base_unit == other.base_unit
         return False
 
     @property
@@ -44,7 +42,7 @@ class Range(BaseModel):
         return value / self.__conversion_factor
 
     def __str__(self):
-        return f"uuid: {self.uuid}, name: {self.__name}, base: {self.__base_unit}"
+        return f"uuid: {self.uuid}, name: {self.__name}, conversion_factor: {self.__conversion_factor}, base_unit: {self.__base_unit}"
 
     @staticmethod
     def create(name, conversion_factor, base_unit=None):
