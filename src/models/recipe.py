@@ -29,6 +29,7 @@ class Recipe(BaseModel):
 
     @ingredients.setter
     def ingredients(self, value: List[Ingredient]):
+        Validator.validate(value, type_=List[Ingredient])
         self.__ingredients = value
 
     @property
@@ -74,10 +75,13 @@ class Recipe(BaseModel):
         return self.name == other.name and self.ingredients == other.ingredients
 
     def __str__(self):
-        ingredients_str = "\n".join(str(ingredient) for ingredient in self.ingredients)
-        steps_str = "\n".join(f"{i + 1}. {step}" for i, step in enumerate(self.steps))
-
-        return f"Рецепт: {self.name}\n" \
-               f"Ингредиенты: \n{ingredients_str}\n" \
-               f"Время приготовления: {self.cooking_time_by_min} минут\n" \
-               f"Шаги приготовления:\n{steps_str}"
+        ingredients_str = ', '.join([str(ingredient) for ingredient in self.ingredients])  # Используем геттер
+        steps_str = '\n'.join([f"{idx + 1}. {step}" for idx, step in enumerate(self.steps)])  # Используем геттер
+        return (
+            f"Recipe: {self.name}\n"  # Используем геттер
+            f"Ingredients: {ingredients_str}\n"
+            f"Steps:\n{steps_str}\n"
+            f"Cooking time: {self.cooking_time_by_min} minutes\n"  # Используем геттер
+            f"Creation time: {self.time}\n"  # Используем геттер
+            f"UUID: {self.__test_uuid}"
+        )

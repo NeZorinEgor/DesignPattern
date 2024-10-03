@@ -52,7 +52,6 @@ class Nomenclature(BaseModel):
     def create(name, group, range):
         Validator.validate(name, type_=str)
         Validator.validate(group, type_=GroupNomenclature)
-        Validator.validate(range, type_=Range)
         item = Nomenclature()
         item.name = name
         item.group = group

@@ -11,7 +11,6 @@ class GroupNomenclature(BaseModel):
 
     @name.setter
     def name(self, new_name: str):
-        Validator.validate(new_name, type_=str)
         self.__name = new_name
 
     def local_eq(self, other):
@@ -20,7 +19,7 @@ class GroupNomenclature(BaseModel):
     @staticmethod
     def create(name="Сырье"):
         item = GroupNomenclature()
-        item.__name = name
+        item.name = name  # Используем сеттер
         return item
 
     def __str__(self):
